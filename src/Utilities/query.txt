@@ -1,0 +1,75 @@
+http://census.soe.com/s:SERVICE_ID/get/ps2/characters_directive?character_id=5428013610422131937&c:limit=10&
+c:join=directive^inject_at:directive^list:1,directive_tree^inject_at:tree^list:1,
+characters_directive_objective^inject_at:objective^on:directive_id^to:directive_id&c:lang=en
+
+
+http://census.soe.com/s:SERVICE_ID/get/ps2/characters_directive_objective?character_id=5428013610422131937&c:limit=10
+&c:join=directive^inject_at:directive,
+objective^inject_at:objective(objective_type^inject_at:objective_type)
+&c:lang=en
+
+
+
+
+http://census.soe.com/s:SERVICE_ID/get/ps2/directive_tree?c:limit=500
+&c:tree=directive_tree_category_id^prefix:cat_^list:1
+&c:lang=en
+
+
+http://census.soe.com/s:SERVICE_ID/get/ps2/directive_tree_category?c:limit=500
+&c:join=directive_tree^list:1^inject_at:trees
+&c:lang=en
+
+
+// Categories and Trees
+http://census.soe.com/s:SERVICE_ID/get/ps2/directive_tree_category?c:limit=500
+&c:join=directive_tree^list:1^inject_at:trees^show:name.en'directive_tree_id
+&c:lang=en
+
+// Categories, Trees, and Tiers
+http://census.soe.com/s:SERVICE_ID/get/ps2/directive_tree_category?c:limit=500
+&c:join=directive_tree^list:1^inject_at:trees^show:name.en'directive_tree_id
+(directive_tier^inject_at:tier^list:1^show:name.en'directive_tier_id)
+&c:lang=en
+
+// Categories, Trees, Tiers, and Directives WRONG
+http://census.soe.com/s:SERVICE_ID/get/ps2/directive_tree_category?c:limit=500
+&c:join=directive_tree^list:1^inject_at:trees^show:name.en'directive_tree_id
+(directive_tier^inject_at:tier^list:1^show:name.en'directive_tier_id
+(directive^inject_at:directive^list:1^on:directive_tier_id^to:directive_tier_id^show:name.en'directive_id))
+&c:lang=en
+
+// Category, Tree, Directive (group by tier)
+http://census.soe.com/s:SERVICE_ID/get/ps2/directive_tree_category?c:limit=500
+&c:join=directive_tree^list:1^inject_at:trees^show:name.en'directive_tree_id
+(directive^inject_at:directive^list:1)
+&c:lang=en
+
+// Tier 1 Medic Directives
+http://census.soe.com/s:SERVICE_ID/get/ps2/directive?c:limit=50&directive_tree_id=28&directive_tier_id=1&c:lang=en
+
+// Maximo's Medic Directives
+http://census.soe.com/get/ps2/characters_directive?character_id=5428013610422131937&c:limit=10&directive_tree_id=28
+http://census.soe.com/get/ps2/characters_directive?character_id=5428013610422131937&c:limit=10&directive_tree_id=28
+&c:join=directive^inject_at:directive
+http://census.soe.com/get/ps2/characters_directive?character_id=5428013610422131937&c:limit=10&directive_tree_id=28
+&c:join=directive^inject_at:directive(directive_tier^inject_at:tier)&c:lang=en
+
+// Maximo's Tier 1 Medic Directives
+// Returns 6 values as expected. API reports returning 18... perhaps x3 for 3 factions?
+http://census.soe.com/get/ps2/characters_directive?character_id=5428013610422131937&c:limit=100
+&directive_tree_id=28
+&c:join=directive^inject_at:directive^terms:directive_tier_id=1^outer:0^hide:description'image_set_id'image_id'image_path
+(directive_tier^inject_at:tier^show:name.en'directive_tier_id)
+&c:lang=en
+
+http://census.soe.com/get/ps2/characters_directive?character_id=5428013610422131937&c:limit=100
+&directive_tree_id=28
+&c:join=directive^inject_at:directive^terms:directive_tier_id=1^outer:0^show:name.en'directive_id'directive_tree_id'directive_tier_id
+&c:lang=en
+
+
+// Maximo's Tier 1 medic directive progress
+http://census.soe.com/get/ps2/characters_directive_objective?character_id=5428013610422131937&c:limit=100
+&c:join=directive^inject_at:directive^terms:directive_tree_id=28^outer:0
+&c:lang=en
