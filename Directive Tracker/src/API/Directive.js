@@ -10,7 +10,7 @@
 'use strict';
 
 // Dependencies
-var queryURL = require('./Query.js').APIURL;
+var queryURL = require('../../../Common/src/API/Query.js').APIURL;
 var JSONP    = require('../Utilities/JSONP.js');
 
 // Private Data
