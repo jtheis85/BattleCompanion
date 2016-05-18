@@ -2,50 +2,22 @@
 
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import API      from './API.js';
 
-import { Button }       from 'react-bootstrap/lib';
-import { Form }         from 'react-bootstrap/lib';
-import { FormGroup }    from 'react-bootstrap/lib';
-import { ControlLabel } from 'react-bootstrap/lib';
-import { FormControl }  from 'react-bootstrap/lib';
+import Data from './Data/Data.js';
 
-const appRootID = 'app-root';
-const query = '{"service":"event","action":"subscribe","worlds":["17"],"eventNames":["PlayerLogin","PlayerLogout"]}';
+import FriendList from './Components/FriendList.jsx';
+
 var messages = [];
 
-const AutoComplete = () => (
-    <Form inline>
-        <FormGroup>
-            <ControlLabel>Search by Name</ControlLabel>
-            {' '}
-            <FormControl
-                type="text"
-                placeholder="Higby"
-            />
-        </FormGroup>
-        {' '}
-        <Button bsStyle="primary">Friend Tracker!</Button>
-        <div>
-            {messages.map((message) => {
-                return <h1>{message}</h1>;
-            })}
-        </div>
-    </Form>
+const appRootID = 'app-root';
 
-);
-
-const Render = () => {
+const Render = (friends) => {
     ReactDOM.render(
-        <AutoComplete/>,
+        <FriendList friends={friends}/>,
         document.getElementById(appRootID)
     );
 };
 
-API.connect((data) => {
-    if(data.payload) {
-        var message = data.payload.character_id + ' ' + data.payload.event_name;
-        messages.push(message);
-        Render();
-    }
-},query);
+Data.startFetchFriends((data) => {
+    Render(data.characters_friend_list[0].friend_list);
+});

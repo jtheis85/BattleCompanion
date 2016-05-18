@@ -1,6 +1,6 @@
 "use strict";
 
-const API = {
+const PushAPI = {
     connect: (onMessageCallback, query) => {
         const url = "wss://push.planetside2.com/streaming?environment=ps2&service-id=s:Sq7FtUG1mfsn";
         var ws = new WebSocket(url);
@@ -19,5 +19,5 @@ const API = {
     }
 };
 
-module.exports = API;
+module.exports = PushAPI;
 

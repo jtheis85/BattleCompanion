@@ -11,7 +11,7 @@
 
 // Dependencies
 var queryURL = require('../../../Common/src/API/Query.js').APIURL;
-var JSONP    = require('../Utilities/JSONP.js');
+var JSONP    = require('../../../Common/src/Utilities/JSONP.js');
 
 // Private Data
 var categoryCallback;
@@ -25,7 +25,7 @@ var Directive = {
         categoryCallback = callback;
     },
     startFetchTreeData: function (callback, categoryID) {
-        var treeQuery = getTreesQuery(categoryID)
+        var treeQuery = getTreesQuery(categoryID);
         JSONP.loadData(treeQuery);
         treesCallback = callback;
     }

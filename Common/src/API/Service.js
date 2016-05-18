@@ -9,7 +9,7 @@
 // You're going to need to change IDs eventually.
 
 var ServiceInfo = {
-    ID: 'XXXXXXXXXXXX',
+    ID: 'Sq7FtUG1mfsn',
     namespace: 's',
     getNamespacedID: function () {
         return this.namespace + ':' + this.ID;
