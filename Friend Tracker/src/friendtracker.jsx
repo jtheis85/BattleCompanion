@@ -18,6 +18,6 @@ const Render = (friends) => {
     );
 };
 
-Data.startFetchFriends((data) => {
-    Render(data.characters_friend_list[0].friend_list);
+Data.startFetchFriends((friends) => {
+    Render(friends);
 });

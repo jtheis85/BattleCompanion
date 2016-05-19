@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 const FriendItem = ({friend}) => (
     <div>
-        {friend.character_id} - {friend.name}
+        {friend.character_id} - {friend.name.first}
     </div>
 );
 
