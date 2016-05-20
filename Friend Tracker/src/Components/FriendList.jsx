@@ -8,7 +8,7 @@ import FriendItem from './FriendItem.jsx';
 const FriendList = ({friends}) => (
     <div>
         {friends.map((friend) => {
-            return <FriendItem key={friend.character_id} friend={friend}/>;
+            return <FriendItem key={friend.id} friend={friend}/>;
         })}
     </div>
 );
