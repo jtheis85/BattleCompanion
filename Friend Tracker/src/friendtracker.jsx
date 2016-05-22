@@ -20,4 +20,10 @@ const Render = (friends) => {
 
 Data.startFetchFriends((friends) => {
     Render(friends);
+    
+    Data.onFriendLoginEvent(friends, (data) => {
+        console.log(data);
+
+        Render(friends);
+    });
 });
