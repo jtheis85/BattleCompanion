@@ -15,8 +15,13 @@ const Data = {
     onFriendLoginEvent: (friends, callback) => {
         const pushQuery = getPushAPIQuery(friends);
         PushAPI.connect((data) => {
-            // TODO: Process data here
-            callback(data);
+            if(data.payload) {
+                const eventData = {
+                    id:        data.payload.character_id,
+                    eventName: data.payload.event_name
+                };
+                callback(eventData);
+            }
         }, pushQuery);
     }
 };
@@ -34,7 +39,6 @@ function getPushAPIQuery(friends) {
     // Build up all the query parameters
     const service    = '"service":"event"';
     const action     = '"action":"subscribe"';
-    //const worlds     = '"worlds":["17"]';
     const characters = '"characters":[' + charIds.join(',') + ']';
     const eventNames = '"eventNames":["PlayerLogin","PlayerLogout"]';
 

@@ -24,6 +24,13 @@ Data.startFetchFriends((friends) => {
     Data.onFriendLoginEvent(friends, (data) => {
         console.log(data);
 
+        // TODO: Should probably use a hash map and index friends by id for faster access
+        const friend = friends.filter((f) => f.id === data.id)[0];
+        if(data.eventName === 'PlayerLogin')
+            friend.status = '1';
+        else if (data.eventName === 'PlayerLogout')
+            friend.status = '0';
+
         Render(friends);
     });
 });
