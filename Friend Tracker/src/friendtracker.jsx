@@ -18,7 +18,7 @@ const Render = (friends) => {
     );
 };
 
-Data.startFetchFriends((friends) => {
+Data.startFetchFriends('5428013610422131937', (friends) => {
     Render(friends);
     
     Data.onFriendLoginEvent(friends, (data) => {

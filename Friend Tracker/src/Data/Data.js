@@ -7,8 +7,8 @@ import JSONP   from '../../../Common/src/Utilities/JSONP.js';
 var friendsLoadCallback;
 
 const Data = {
-    startFetchFriends: (callback) => {
-        const friendQuery = getFriendQuery();
+    startFetchFriends: (user_id, callback) => {
+        const friendQuery = getFriendQuery(user_id);
         JSONP.loadData(friendQuery);
         friendsLoadCallback = callback;
     },
@@ -26,9 +26,9 @@ const Data = {
     }
 };
 
-function getFriendQuery() {
+function getFriendQuery(user_id) {
     const callbackString = '&callback=friendsLoad';
-    const queryBody = 'characters_friend?character_id=5428013610422131937&c:join=character^on:friend_list.character_id^to:character_id^inject_at:friend_character_info';
+    const queryBody = 'characters_friend?character_id='+ user_id +'&c:join=character^on:friend_list.character_id^to:character_id^inject_at:friend_character_info';
     return Query.APIURL + queryBody + callbackString;
 }
 
