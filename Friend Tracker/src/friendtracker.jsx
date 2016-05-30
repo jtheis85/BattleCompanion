@@ -11,20 +11,28 @@ import HashListener from '../../Common/src/Utilities/HashListener.js';
 
 // Component Dependencies
 import FriendList from './Components/FriendList.jsx';
+import CharacterSearch from './Components/CharacterSearch.jsx';
 
 const appRootID = 'app-root';
 
 // App initialization
-const initialUserId = Router.initialize();
-initializeFriendList(initialUserId);
+const initialUserID = Router.initialize();
+initializeUI(initialUserID);
 
 // Update whenever a new ID is placed in the hash
 HashListener.initialize((hash) => {
-    const newUserId = Router.getRoute(hash);
-    initializeFriendList(newUserId);
+    const newUserID = Router.getRoute(hash);
+    initializeUI(newUserID);
 });
 
-const Render = (friends) => {
+function RenderCharacterSearch() {
+    ReactDOM.render(
+        <CharacterSearch/>,
+        document.getElementById(appRootID)
+    );
+};
+
+const RenderFriendList = (friends) => {
     ReactDOM.render(
         <FriendList friends={friends}/>,
         document.getElementById(appRootID)
@@ -32,9 +40,17 @@ const Render = (friends) => {
 };
 
 // userId: e.g. '5428013610422131937'
+function initializeUI(userId) {
+    if(userId && userId != '') {
+        initializeFriendList(userId);
+    } else {
+        RenderCharacterSearch();
+    }
+}
+
 function initializeFriendList(userId) {
     Data.startFetchFriends(userId, (friends) => {
-        Render(friends);
+        RenderFriendList(friends);
 
         Data.onFriendLoginEvent(friends, (data) => {
             console.log(data);
@@ -46,7 +62,7 @@ function initializeFriendList(userId) {
             else if (data.eventName === 'PlayerLogout')
                 friend.status = '0';
 
-            Render(friends);
+            RenderFriendList(friends);
         });
     });
 }
