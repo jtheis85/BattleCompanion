@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import FriendItem from './FriendItem.jsx';
 
 const FriendList = ({friends}) => (
-    <div>
+    <div className="friend-list">
         {friends.map((friend) => {
             return <FriendItem key={friend.id} friend={friend}/>;
         })}
