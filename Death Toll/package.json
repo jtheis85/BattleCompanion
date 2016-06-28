@@ -1,0 +1,12 @@
+{
+  "name": "battlecompaion-death-toll",
+  "version": "0.0.1",
+  "dependencies": {
+    "firebase": "^3.0.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "browserify deathtoll.js -o bundle.js",
+    "watch": "watchify deathtoll.js -o bundle.js --debug"
+  }
+}
