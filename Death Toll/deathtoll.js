@@ -18,6 +18,87 @@ var totalDeaths = 0;
 var VSDeaths    = 0;
 var NCDeaths    = 0;
 var TRDeaths    = 0;
+var VSDeltaVal  = 0;
+var NCDeltaVal  = 0;
+var TRDeltaVal  = 0;
+
+var VSChart = [];
+var NCChart = [];
+var TRChart = [];
+
+var chart;
+
+window.onload = function() {
+    chart = new CanvasJS.Chart("chartContainer",{
+        title :{
+            text: "Death Deltas by Faction"
+        },
+        data: [
+            {
+                type: "area",
+                color: "rgba(128,0,128,.5)",
+                dataPoints: VSChart
+            },
+            {
+                type: "area",
+                color: "rgba(0,0,255,.5)",
+                dataPoints: NCChart
+            },
+            {
+                type: "area",
+                color: "rgba(255,0,0,.5)",
+                dataPoints: TRChart
+            }
+        ]
+    });
+};
+
+var xVal = 0;
+var updateInterval = 100;
+var dataLength = 200; // number of dataPoints visible at any point
+
+var updateChart = function (count) {
+    if(!chart) return;
+
+    count = count || 1;
+    // count is number of times loop runs to generate random dataPoints.
+
+    for (var j = 0; j < count; j++) {
+        VSChart.push({
+            x: xVal,
+            y: VSDeltaVal
+        });
+        NCChart.push({
+            x: xVal,
+            y: NCDeltaVal
+        });
+        TRChart.push({
+            x: xVal,
+            y: TRDeltaVal
+        });
+        xVal++;
+    }
+    if (VSChart.length > dataLength)
+    {
+        VSChart.shift();
+    }
+    if (NCChart.length > dataLength)
+    {
+        NCChart.shift();
+    }
+    if (TRChart.length > dataLength)
+    {
+        TRChart.shift();
+    }
+
+    chart.render();
+};
+
+// generates first set of dataPoints
+updateChart(dataLength);
+
+// update chart after specified time.
+setInterval(function(){updateChart()}, updateInterval);
 
 LoadoutData.startFetchLoadouts(startTrackingDeaths);
 
@@ -52,19 +133,24 @@ function updateDeltas() {
     var max = Math.max(VSDeaths, NCDeaths, TRDeaths);
     var mid = 0;
     var min = Math.min(VSDeaths, NCDeaths, TRDeaths);
-    
+    var deltaValue = 0;
     // VS
     if(VSDeaths <= TRDeaths && VSDeaths >= NCDeaths ||
        VSDeaths >= TRDeaths && VSDeaths <= NCDeaths) {
         VSDelta.innerHTML = mid;
+        VSDeltaVal = mid;
         VSDelta.className = 'mid';
     }
     if(VSDeaths >= TRDeaths && VSDeaths >= NCDeaths) {
-        VSDelta.innerHTML = '+ ' + (VSDeaths - Math.max(NCDeaths, TRDeaths));
+        deltaValue  = VSDeaths - Math.max(NCDeaths, TRDeaths);
+        VSDelta.innerHTML = '+ ' + deltaValue;
+        VSDeltaVal = deltaValue;
         VSDelta.className = 'max';
     }
     if(VSDeaths <= TRDeaths && VSDeaths <= NCDeaths) {
-        VSDelta.innerHTML = VSDeaths - Math.min(NCDeaths, TRDeaths);
+        deltaValue = VSDeaths - Math.min(NCDeaths, TRDeaths);
+        VSDelta.innerHTML = deltaValue;
+        VSDeltaVal = deltaValue;
         VSDelta.className = 'min';
     }
 
@@ -72,14 +158,19 @@ function updateDeltas() {
     if(NCDeaths <= TRDeaths && NCDeaths >= VSDeaths ||
        NCDeaths >= TRDeaths && NCDeaths <= VSDeaths) {
         NCDelta.innerHTML = mid;
+        NCDeltaVal = mid;
         NCDelta.className = 'mid';
     }
     if(NCDeaths >= TRDeaths && NCDeaths >= VSDeaths) {
-        NCDelta.innerHTML = '+ ' + (NCDeaths - Math.max(VSDeaths, TRDeaths));
+        deltaValue = NCDeaths - Math.max(VSDeaths, TRDeaths);
+        NCDelta.innerHTML = '+ ' + deltaValue;
+        NCDeltaVal = deltaValue;
         NCDelta.className = 'max';
     }
     if(NCDeaths <= TRDeaths && NCDeaths <= VSDeaths) {
-        NCDelta.innerHTML = NCDeaths - Math.min(VSDeaths, TRDeaths);
+        deltaValue = NCDeaths - Math.min(VSDeaths, TRDeaths);
+        NCDelta.innerHTML = deltaValue;
+        NCDeltaVal = deltaValue;
         NCDelta.className = 'min';
     }
 
@@ -87,14 +178,19 @@ function updateDeltas() {
     if(TRDeaths <= VSDeaths && TRDeaths >= NCDeaths ||
        TRDeaths >= VSDeaths && TRDeaths <= NCDeaths) {
         TRDelta.innerHTML = mid;
+        TRDeltaVal = mid;
         TRDelta.className = 'mid';
     }
     if(TRDeaths >= VSDeaths && TRDeaths >= NCDeaths) {
-        TRDelta.innerHTML = '+ ' + (TRDeaths - Math.max(VSDeaths, NCDeaths));
+        deltaValue = TRDeaths - Math.max(VSDeaths, NCDeaths);
+        TRDelta.innerHTML = '+ ' + deltaValue;
+        TRDeltaVal = deltaValue;
         TRDelta.className = 'max';
     }
     if(TRDeaths <= VSDeaths && TRDeaths <= NCDeaths) {
-        TRDelta.innerHTML =  TRDeaths - Math.min(VSDeaths, NCDeaths);
+        deltaValue = TRDeaths - Math.min(VSDeaths, NCDeaths);
+        TRDelta.innerHTML = deltaValue;
+        TRDeltaVal = deltaValue;
         TRDelta.className = 'min';
     }
 }
