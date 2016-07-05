@@ -2,7 +2,7 @@
 
 var serviceID = require('./Service.js').getNamespacedID();
 
-const censusDomain = 'http://census.daybreakgames.com';
+const censusDomain = 'https://census.daybreakgames.com';
 const verb         = 'get';
 const namespace    = 'ps2';
 const version      = 'v2';

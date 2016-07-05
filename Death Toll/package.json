@@ -4,7 +4,9 @@
   "dependencies": {
     "firebase": "^3.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "watchify": "^3.7.0"
+  },
   "scripts": {
     "build": "browserify deathtoll.js -o bundle.js",
     "watch": "watchify deathtoll.js -o bundle.js --debug"
