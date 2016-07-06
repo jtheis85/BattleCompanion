@@ -131,19 +131,20 @@ function startTrackingDeaths() {
 
 function updateDeltas() {
     var max = Math.max(VSDeaths, NCDeaths, TRDeaths);
-    var mid = 0;
+    var avg = Math.round((VSDeaths + NCDeaths + TRDeaths)/3);
     var min = Math.min(VSDeaths, NCDeaths, TRDeaths);
     var deltaValue = 0;
     // VS
     if(VSDeaths <= TRDeaths && VSDeaths >= NCDeaths ||
        VSDeaths >= TRDeaths && VSDeaths <= NCDeaths) {
-        VSDelta.innerHTML = mid;
-        VSDeltaVal = mid;
+        deltaValue = VSDeaths >= avg ? VSDeaths - avg : avg - VSDeaths;
+        VSDelta.innerHTML = avg >= 0 ? '+' + deltaValue : deltaValue;
+        VSDeltaVal = deltaValue;
         VSDelta.className = 'mid';
     }
     if(VSDeaths >= TRDeaths && VSDeaths >= NCDeaths) {
         deltaValue  = VSDeaths - Math.max(NCDeaths, TRDeaths);
-        VSDelta.innerHTML = '+ ' + deltaValue;
+        VSDelta.innerHTML = '+' + deltaValue;
         VSDeltaVal = deltaValue;
         VSDelta.className = 'max';
     }
@@ -157,13 +158,14 @@ function updateDeltas() {
     // NC
     if(NCDeaths <= TRDeaths && NCDeaths >= VSDeaths ||
        NCDeaths >= TRDeaths && NCDeaths <= VSDeaths) {
-        NCDelta.innerHTML = mid;
-        NCDeltaVal = mid;
+        deltaValue = NCDeaths >= avg ? NCDeaths - avg : avg - NCDeaths;
+        NCDelta.innerHTML = avg >= 0 ? '+' + deltaValue : deltaValue;
+        NCDeltaVal = deltaValue;
         NCDelta.className = 'mid';
     }
     if(NCDeaths >= TRDeaths && NCDeaths >= VSDeaths) {
         deltaValue = NCDeaths - Math.max(VSDeaths, TRDeaths);
-        NCDelta.innerHTML = '+ ' + deltaValue;
+        NCDelta.innerHTML = '+' + deltaValue;
         NCDeltaVal = deltaValue;
         NCDelta.className = 'max';
     }
@@ -177,13 +179,14 @@ function updateDeltas() {
     // TR
     if(TRDeaths <= VSDeaths && TRDeaths >= NCDeaths ||
        TRDeaths >= VSDeaths && TRDeaths <= NCDeaths) {
-        TRDelta.innerHTML = mid;
-        TRDeltaVal = mid;
+        deltaValue = TRDeaths >= avg ? TRDeaths - avg : avg - TRDeaths;
+        TRDelta.innerHTML = avg >= 0 ? '+' + deltaValue : deltaValue;
+        TRDeltaVal = deltaValue;
         TRDelta.className = 'mid';
     }
     if(TRDeaths >= VSDeaths && TRDeaths >= NCDeaths) {
         deltaValue = TRDeaths - Math.max(VSDeaths, NCDeaths);
-        TRDelta.innerHTML = '+ ' + deltaValue;
+        TRDelta.innerHTML = '+' + deltaValue;
         TRDeltaVal = deltaValue;
         TRDelta.className = 'max';
     }
