@@ -2,6 +2,8 @@
   <dictionary name="Joe">
     <words>
       <w>jsonp</w>
+      <w>loadout</w>
+      <w>loadouts</w>
     </words>
   </dictionary>
 </component>

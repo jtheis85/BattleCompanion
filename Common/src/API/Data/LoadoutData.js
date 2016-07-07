@@ -1,6 +1,5 @@
 'use strict';
 
-
 // { loadout_list: [
 //     {
 //       loadout_id: "1",
@@ -16,7 +15,11 @@ var Query   = require('../Query.js');
 var JSONP   = require('../../Utilities/JSONP.js');
 
 var loadoutsLoadCallback;
-var loadoutList = [];
+// Use instead of an object literal (e.g. {} ). An object literal has Object.prototype as its prototype, looking up a
+// string key that happens to be a method on Object.prototype will return the method unexpectedly
+// Passing null to Object.create explicitly sets the prototype to null
+// See http://ryanmorr.com/true-hash-maps-in-javascript/ for more
+var loadoutDictionary= Object.create(null);
 
 var LoadoutData = {
     startFetchLoadouts: function (callback) {
@@ -25,13 +28,10 @@ var LoadoutData = {
         loadoutsLoadCallback = callback;
     },
     getLoadouts: function() {
-        return loadoutList;
+        return loadoutDictionary;
     },
     getLoadout: function(id) {
-        // TODO: Switch to storing in an object by loadout ID for better perf
-        return loadoutList.filter(function(loadout) {
-            return loadout.id === id;
-        })[0];
+        return loadoutDictionary[id];
     }
 };
 
@@ -42,17 +42,16 @@ function getLoadoutsQuery() {
 }
 
 window.loadoutsLoad = function (data) {
-    var loadouts = data.loadout_list.map(function(loadout) {
-        return new Loadout(
+
+    data.loadout_list.forEach(function(loadout) {
+        loadoutDictionary[loadout.loadout_id] = new Loadout(
             loadout.loadout_id,
             loadout.faction_id,
             loadout.code_name
         );
     });
 
-    loadoutList = loadouts;
-
-    loadoutsLoadCallback(loadouts);
+    loadoutsLoadCallback(loadoutDictionary);
 };
 
 module.exports = LoadoutData;
