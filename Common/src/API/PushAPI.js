@@ -16,6 +16,26 @@ const PushAPI = {
         ws.onerror = () => {
 
         };
+    },
+    buildQuery: (eventNamesArray, charactersArray) => {
+        var charactersString;
+        if(charactersArray && charactersArray.length > 0) {
+            charactersString = charactersArray.join('","');
+        } else {
+            charactersString = 'all';
+        }
+
+        // Build up all the query parameters
+        var service    = '"service":"event"';
+        var action     = '"action":"subscribe"';
+        var characters = '"characters":["'+ charactersString +'"]';
+        var eventNames = '"eventNames":["'+ eventNamesArray.join('","') +'"]';
+
+        // Collect all the parameters
+        var queryParams = [service, action, characters, eventNames];
+
+        // Finalize the query
+        return '{' + queryParams.join(',') + '}';
     }
 };
 

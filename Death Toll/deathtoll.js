@@ -206,6 +206,7 @@ function onDeathEvent(callback) {
     }, pushQuery);
 }
 
+// TODO: switch to using PushAPI.buildQuery
 function getPushAPIQuery(){
     // Build up all the query parameters
     var service    = '"service":"event"';

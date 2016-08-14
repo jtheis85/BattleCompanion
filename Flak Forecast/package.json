@@ -1,0 +1,14 @@
+{
+  "name": "battlecompanion-flakforecast",
+  "version": "0.0.1",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "watchify": "^3.7.0"
+  },
+  "scripts": {
+    "build": "browserify src/flakforecast.js -o flakforecast-bundle.js",
+    "watch": "watchify src/flakforecast.js -o flakforecast-bundle.js --debug"
+  }
+}

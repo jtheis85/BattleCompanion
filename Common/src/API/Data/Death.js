@@ -1,5 +1,3 @@
-// DeathInfo
-
 'use strict';
 
 var LoadoutData = require('./LoadoutData.js');
@@ -21,7 +19,7 @@ var FactionData = require('./FactionData.js');
 //     "vehicle_id":"",
 //     "world_id":"",
 //     "zone_id":""
-// },
+// }
 
 var Death = function(attackerLoadoutId, loadoutId) {
     this.attackerFaction = LoadoutData.getLoadout(attackerLoadoutId).faction;

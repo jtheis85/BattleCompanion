@@ -19,7 +19,7 @@ var loadoutsLoadCallback;
 // string key that happens to be a method on Object.prototype will return the method unexpectedly
 // Passing null to Object.create explicitly sets the prototype to null
 // See http://ryanmorr.com/true-hash-maps-in-javascript/ for more
-var loadoutDictionary= Object.create(null);
+var loadoutDictionary = Object.create(null);
 
 var LoadoutData = {
     startFetchLoadouts: function (callback) {
