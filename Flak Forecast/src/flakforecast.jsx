@@ -18,6 +18,7 @@ ReferenceData.startFetchData(() => {
 
     Router.initialize(route => {
         currentRoute = route;
+        ReactDOM.render(<FlakForecastApp route={currentRoute} worlds={ReferenceData.getWorlds()}/>, document.getElementById('main-nav'));
     });
 
     // Once the reference data is loaded, connect to the real-time API
@@ -25,8 +26,11 @@ ReferenceData.startFetchData(() => {
         //OnEvent
         // Don't filter if no route is set
         if (!currentRoute ||
+            // Only filter on world if that's all that's set
             (currentRoute.worldId === event.world.id &&
-             currentRoute.zoneId  === event.zone .id)) {
+                currentRoute.zoneId  === undefined) ||
+            (currentRoute.worldId === event.world.id &&
+                currentRoute.zoneId  === event.zone .id)) {
 
             appendMessage(event);
         }
@@ -50,7 +54,5 @@ ReferenceData.startFetchData(() => {
 
         return displayPieces.join(' ');
     }
-
-    ReactDOM.render(<FlakForecastApp worlds={ReferenceData.getWorlds()}/>, document.getElementById('main-nav'));
 });
 
