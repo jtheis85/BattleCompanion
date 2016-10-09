@@ -1,5 +1,10 @@
 'use strict';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import FlakForecastApp from './Components/FlakForecastApp.jsx';
+
 var ReferenceData = require('./ReferenceData.js');
 var RealTimeData  = require('./RealTimeData.js');
 var Router        = require('./Router.js');
@@ -9,19 +14,23 @@ var Faction       = require('../../Common/src/API/Data/Faction.js');
 
 var currentRoute;
 
-ReferenceData.startFetchData(function() {
+ReferenceData.startFetchData(() => {
 
-    Router.initialize(function(route) {
+    Router.initialize(route => {
         currentRoute = route;
+        ReactDOM.render(<FlakForecastApp route={currentRoute} worlds={ReferenceData.getWorlds()}/>, document.getElementById('main-nav'));
     });
 
     // Once the reference data is loaded, connect to the real-time API
-    RealTimeData.connect(function(event) {
+    RealTimeData.connect(event => {
         //OnEvent
         // Don't filter if no route is set
         if (!currentRoute ||
+            // Only filter on world if that's all that's set
             (currentRoute.worldId === event.world.id &&
-             currentRoute.zoneId  === event.zone .id)) {
+                currentRoute.zoneId  === undefined) ||
+            (currentRoute.worldId === event.world.id &&
+                currentRoute.zoneId  === event.zone .id)) {
 
             appendMessage(event);
         }
@@ -31,7 +40,9 @@ ReferenceData.startFetchData(function() {
         var div = document.createElement('div');
         var text = document.createTextNode(buildString(event));
         div.appendChild(text);
-        document.body.appendChild(div);
+
+        var messagesArea = document.getElementById('messages-area');
+        messagesArea.appendChild(div);
     }
 
     function buildString(event) {

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{BattleCompanion node_modules}" />
+    <file url="file://$PROJECT_DIR$/Death Toll" libraries="{BattleCompanion/Death Toll/node_modules}" />
+    <file url="file://$PROJECT_DIR$/Directive Tracker" libraries="{BattleCompanion/Directive Tracker/node_modules}" />
+    <file url="file://$PROJECT_DIR$/Flak Forecast" libraries="{BattleCompanion/Flak Forecast/node_modules}" />
+    <file url="file://$PROJECT_DIR$/Friend Tracker" libraries="{BattleCompanion/Friend Tracker/node_modules}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
   </component>
 </project>

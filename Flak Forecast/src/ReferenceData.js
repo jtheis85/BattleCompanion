@@ -39,6 +39,13 @@ var ReferenceData = {
 
         initializeCallback = callback;
     },
+    getWorlds() {
+        var worldArray = [];
+        for (var worldId in worlds) {
+            worldArray.push(worlds[worldId]);
+        }
+        return worldArray;
+    },
     lookupWorld: function(worldId) {
         return worlds[worldId];
     },
