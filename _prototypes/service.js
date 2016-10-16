@@ -8,12 +8,16 @@
 // Looks like you were an idiot and checked in the service ID in a different file (JSONP.js)
 // You're going to need to change IDs eventually.
 
-var ServiceInfo = {
+let ServiceInfo = {
     ID: 'Sq7FtUG1mfsn',
     namespace: 's',
-    getNamespacedID: function () {
+    queryParameterName: 'service-id',
+    getNamespacedID() {
         return this.namespace + ':' + this.ID;
+    },
+    getQueryParameter() {
+        return `${this.queryParameterName}=${this.getNamespacedID()}`;
     }
 };
 
-module.exports = ServiceInfo;
+export default ServiceInfo;

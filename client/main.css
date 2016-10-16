@@ -1,0 +1,8 @@
+@import url(_dependencies/bootstrap-3.3.7-dist/css/bootstrap.min.css);
+.alert > .badge {
+  float: right; }
+
+.alert.alert-danger > .badge {
+  background-color: red; }
+
+/*# sourceMappingURL=main.css.map */
