@@ -4,7 +4,7 @@ import WebSocket from 'ws';
 
 var ws;
 
-let wsApi = {
+const wsApi = {
     connect(readyCallback) {
         initializeConnection(readyCallback);
     },

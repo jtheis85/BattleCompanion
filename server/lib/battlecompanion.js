@@ -1,18 +1,31 @@
 'use strict';
 
-var _wsApi = require('./API/wsApi.js');
+var _wsApi = require('./api/wsApi.js');
 
 var _wsApi2 = _interopRequireDefault(_wsApi);
 
-var _WsApiSubscription = require('./API/WsApiSubscription.js');
+var _WsApiSubscription = require('./api/WsApiSubscription.js');
 
-var _WsApiSubscription2 = _interopRequireDefault(_WsApiSubscription);
+var _restApi = require('./api/restApi.js');
+
+var _restApi2 = _interopRequireDefault(_restApi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_wsApi2.default.connect(function () {
-    var playerLoginSub = new _WsApiSubscription2.default([1], null, ['PlayerLogin', 'PlayerLogout']);
-    _wsApi2.default.subscribe(playerLoginSub, function (data) {
-        console.log(data);
-    });
+//wsApi.connect(() => {
+//    let playerLoginSub = {
+//        ...subscribe,
+//        worlds: [17],
+//        characters: ['all'],
+//        eventNames: ['Death']
+//    };
+//    wsApi.subscribe(playerLoginSub, (data) => {
+//        console.log(data);
+//    });
+//});
+
+var query = new _restApi.RestApiQuery('character');
+console.log(query.url);
+_restApi2.default.get(query.url, function (data) {
+    console.log(data);
 });
