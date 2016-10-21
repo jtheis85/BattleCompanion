@@ -18,7 +18,16 @@ import { subscribe } from './api/WsApiSubscription.js';
 import restApi from './api/restApi.js';
 import { RestApiQuery } from './api/restApi.js';
 
-let characterQuery = new RestApiQuery('character');
-restApi.get(characterQuery.url, (data) => {
-    console.log(data);
+
+//let characterQuery = new RestApiQuery('character');
+//restApi.get(characterQuery.url, (data) => {
+//    console.log(data);
+//});
+
+import loadoutData from './api/data/loadoutData.js';
+
+loadoutData.startFetchLoadouts((loadouts) => {
+    for(let loadoutId in loadouts) {
+        console.log(loadouts[loadoutId].name);
+    }
 });

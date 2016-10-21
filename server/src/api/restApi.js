@@ -15,14 +15,25 @@ const restApi = {
 };
 
 class RestApiQuery {
-    constructor(query) {
+    constructor(collection, queryParams, limit) {
         const domain    = 'https://census.daybreakgames.com';
         const serviceId = 's:Sq7FtUG1mfsn';
-        const verb      = 'get';
-        const namespace = 'ps2';
-        const version   = 'v2';
 
-        this.url = `${domain}/${serviceId}/${verb}/${namespace}:${version}/${query}`;
+        let query = '';
+        if(queryParams) {
+            let params = [];
+            for(let param in queryParams) {
+                if(!queryParams.hasOwnProperty(param)) continue;
+                params.push(`${param}=${queryParams[param]}`);
+            }
+            query = `?${params.join('&')}`;
+        }
+
+        if(limit) {
+            query += `&c:limit=${limit}`;
+        }
+
+        this.url = `${domain}/${serviceId}/get/ps2:v2/${collection}${query}`;
     }
 }
 
