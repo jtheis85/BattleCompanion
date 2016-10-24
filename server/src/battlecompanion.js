@@ -25,9 +25,9 @@ import { RestApiQuery } from './api/restApi.js';
 //});
 
 import loadoutData from './api/data/loadoutData.js';
+import factionData from './api/data/factionData.js';
+import zoneData    from './api/data/zoneData.js';
+import worldData   from './api/data/worldData.js';
 
-loadoutData.startFetchLoadouts((loadouts) => {
-    for(let loadoutId in loadouts) {
-        console.log(loadouts[loadoutId].name);
-    }
-});
+zoneData.startFetchZones(zones => console.log(zones));
+worldData.startFetchWorlds(worlds => console.log(worlds));
