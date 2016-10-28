@@ -1,33 +1,21 @@
 'use strict';
 
-import wsApi from './api/wsApi.js';
-import { subscribe } from './api/WsApiSubscription.js';
-
-//wsApi.connect(() => {
-//    let playerLoginSub = {
-//        ...subscribe,
-//        worlds: [17],
-//        characters: ['all'],
-//        eventNames: ['Death']
-//    };
-//    wsApi.subscribe(playerLoginSub, (data) => {
-//        console.log(data);
-//    });
-//});
-
-import restApi from './api/restApi.js';
-import { RestApiQuery } from './api/restApi.js';
-
-
-//let characterQuery = new RestApiQuery('character');
-//restApi.get(characterQuery.url, (data) => {
-//    console.log(data);
-//});
-
+import deathData from './api/data/deathData.js';
 import loadoutData from './api/data/loadoutData.js';
-import factionData from './api/data/factionData.js';
 import zoneData    from './api/data/zoneData.js';
 import worldData   from './api/data/worldData.js';
 
-zoneData.startFetchZones(zones => console.log(zones));
-worldData.startFetchWorlds(worlds => console.log(worlds));
+loadoutData.startFetchLoadouts(loadouts => dataReceived());
+zoneData.startFetchZones(zones => dataReceived());
+worldData.startFetchWorlds(worlds => dataReceived());
+
+let dataCount = 0;
+function dataReceived() {
+    console.log(loadoutData.getLoadouts());
+    console.log(zoneData.getZones());
+    console.log(worldData.getWorlds());
+    dataCount++;
+    if (dataCount < 3) return;
+
+    deathData.trackDeaths();
+}
