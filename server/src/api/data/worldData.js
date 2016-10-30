@@ -8,7 +8,7 @@ const worldDictionary = Object.create(null);
 
 const worldData = {
     startFetchWorlds(callback) {
-        const worldsQuery = new RestApiQuery('world',{}, 20)
+        const worldsQuery = new RestApiQuery('world',{}, 20);
         restApi.get(worldsQuery.url, data => {
             buildWorldDictionary(data);
             callback(worldDictionary);

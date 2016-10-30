@@ -6,23 +6,24 @@ import Death         from '../datatypes/Death.js';
 
 import loadoutData from '../data/loadoutData.js';
 import factionData from '../data/factionData.js';
-import zoneData    from '../data/zoneData.js';
 import worldData   from '../data/worldData.js';
+import vehicleData from '../data/vehicleData.js';
+import zoneData    from '../data/zoneData.js';
 
 const deathData = {
     trackDeaths() {
         wsApi.connect(() => {
             const deathSub = {
                 ...subscribe,
+                // NOTE! currently the api seems to ignore specifying the world when characters is specified as all.
                 worlds: ['17'],
                 characters: ['all'],
                 eventNames: ['Death']
             };
-            console.log(deathSub);
             wsApi.subscribe(deathSub, (data) => {
                 if(!data.payload) return;
                 const death = toDeath(data);
-                console.log(toDeath(data));
+                console.log(death);
             });
         });
     }
@@ -33,7 +34,7 @@ function toDeath(apiObject) {
     return new Death(
         loadoutData.getLoadout(data.attacker_loadout_id),
         data.attacker_weapon_id,
-        data.attacker_vehicle_id,
+        vehicleData.getVehicle(data.attacker_vehicle_id),
         loadoutData.getLoadout(data.character_loadout_id),
         data.timestamp,
         worldData.getWorld(data.world_id),

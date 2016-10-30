@@ -1,21 +1,20 @@
 'use strict';
 
-import deathData from './api/data/deathData.js';
+import deathData   from './api/data/deathData.js';
 import loadoutData from './api/data/loadoutData.js';
-import zoneData    from './api/data/zoneData.js';
+import vehicleData from './api/data/vehicleData.js';
 import worldData   from './api/data/worldData.js';
+import zoneData    from './api/data/zoneData.js';
 
-loadoutData.startFetchLoadouts(loadouts => dataReceived());
-zoneData.startFetchZones(zones => dataReceived());
 worldData.startFetchWorlds(worlds => dataReceived());
+zoneData.startFetchZones(zones => dataReceived());
+loadoutData.startFetchLoadouts(loadouts => dataReceived());
+vehicleData.startFetchVehicles(vehicles => dataReceived());
 
 let dataCount = 0;
 function dataReceived() {
-    console.log(loadoutData.getLoadouts());
-    console.log(zoneData.getZones());
-    console.log(worldData.getWorlds());
     dataCount++;
-    if (dataCount < 3) return;
+    if (dataCount < 4) return;
 
     deathData.trackDeaths();
 }
