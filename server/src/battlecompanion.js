@@ -7,17 +7,19 @@ import weaponData  from './api/data/weaponData.js';
 import worldData   from './api/data/worldData.js';
 import zoneData    from './api/data/zoneData.js';
 
-weaponData.startFetchWeapons(weapons => {});
+weaponData.startFetchWeapons(weapons => dataReceived());
+worldData.startFetchWorlds(worlds => dataReceived());
+zoneData.startFetchZones(zones => dataReceived());
+loadoutData.startFetchLoadouts(loadouts => dataReceived());
+vehicleData.startFetchVehicles(vehicles => dataReceived());
 
-//worldData.startFetchWorlds(worlds => dataReceived());
-//zoneData.startFetchZones(zones => dataReceived());
-//loadoutData.startFetchLoadouts(loadouts => dataReceived());
-//vehicleData.startFetchVehicles(vehicles => dataReceived());
-//
-//let dataCount = 0;
-//function dataReceived() {
-//    dataCount++;
-//    if (dataCount < 4) return;
-//
-//    deathData.trackDeaths();
-//}
+let dataCount = 0;
+function dataReceived() {
+    dataCount++;
+    if (dataCount < 5) {
+        console.log('Data received...');
+        return;
+    };
+
+    deathData.trackDeaths();
+}

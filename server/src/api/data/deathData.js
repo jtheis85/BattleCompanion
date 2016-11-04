@@ -8,6 +8,7 @@ import loadoutData from '../data/loadoutData.js';
 import factionData from '../data/factionData.js';
 import worldData   from '../data/worldData.js';
 import vehicleData from '../data/vehicleData.js';
+import weaponData  from '../data/weaponData.js';
 import zoneData    from '../data/zoneData.js';
 
 const deathData = {
@@ -23,7 +24,10 @@ const deathData = {
             wsApi.subscribe(deathSub, (data) => {
                 if(!data.payload) return;
                 const death = toDeath(data);
-                console.log(death);
+                if(death.attackerWeapon &&
+                    death.attackerWeapon.domain) {
+                    console.log(death.attackerWeapon.domain);
+                }
             });
         });
     }
@@ -33,7 +37,7 @@ function toDeath(apiObject) {
     const data = apiObject.payload;
     return new Death(
         loadoutData.getLoadout(data.attacker_loadout_id),
-        data.attacker_weapon_id,
+        weaponData.getWeapon(data.attacker_weapon_id),
         vehicleData.getVehicle(data.attacker_vehicle_id),
         loadoutData.getLoadout(data.character_loadout_id),
         data.timestamp,

@@ -7,7 +7,7 @@ const weaponDomain = {
     max:           'WEAPON_DOMAIN_MAX',
     base:          'WEAPON_DOMAIN_BASE',
     construction:  'WEAPON_DOMAIN_CONSTRUCTION',
-    unknown:       'WEAPON_DOMAIN_UNKNOWN'
+    misc:          'WEAPON_DOMAIN_MISC'
 };
 
 const weaponCategory = {
@@ -61,4 +61,4 @@ class Weapon {
     }
 }
 
-export { Weapon as default, weaponCategory}
+export { Weapon as default, weaponCategory, weaponDomain }
