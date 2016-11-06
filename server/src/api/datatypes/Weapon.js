@@ -11,22 +11,17 @@ const weaponDomain = {
 };
 
 const weaponCategory = {
-    galPrimary:   'WEAPON_CATEGORY_GALAXY_PRIMARY',
-    galSecondary: 'WEAPON_CATEGORY_GALAXY_SECONDARY',
-    esfPrimary:   'WEAPON_CATEGORY_ESF_PRIMARY',
-    esfSecondary: 'WEAPON_CATEGORY_ESF_SECONDARY',
-    libPrimary:   'WEAPON_CATEGORY_LIB_PRIMARY',
-    libBelly:     'WEAPON_CATEGORY_LIB_BELLY',
-    libTail:      'WEAPON_CATEGORY_LIB_TAIL',
-    valkyrie:     'WEAPON_CATEGORY_VALKYRIE',
+    galaxy:    'WEAPON_CATEGORY_GALAXY',
+    esf:       'WEAPON_CATEGORY_ESF',
+    liberator: 'WEAPON_CATEGORY_LIBERATOR',
+    valkyrie:  'WEAPON_CATEGORY_VALKYRIE',
 
-    flash:        'WEAPON_CATEGORY_FLASH',
-    harasser:     'WEAPON_CATEGORY_HARASSER',
-    ant:          'WEAPON_CATEGORY_ANT',
-    sunderer:     'WEAPON_CATEGORY_SUNDERER',
-    lightning:    'WEAPON_CATEGORY_LIGHTNING',
-    mbtPrimary:   'WEAPON_CATEGORY_MBT_PRIMARY',
-    mbtSecondary: 'WEAPON_CATEGORY_MBT_SECONDARY',
+    flash:      'WEAPON_CATEGORY_FLASH',
+    harasser:   'WEAPON_CATEGORY_HARASSER',
+    ant:        'WEAPON_CATEGORY_ANT',
+    sunderer:   'WEAPON_CATEGORY_SUNDERER',
+    lightning:  'WEAPON_CATEGORY_LIGHTNING',
+    mbtPrimary: 'WEAPON_CATEGORY_MBT',
 
     // Most primaries and secondaries, melee, etc.
     // AI MANA turret, sentry turret

@@ -25,8 +25,8 @@ const deathData = {
                 if(!data.payload) return;
                 const death = toDeath(data);
                 if(death.attackerWeapon &&
-                    death.attackerWeapon.domain) {
-                    console.log(death.attackerWeapon.domain);
+                    death.attackerWeapon.category) {
+                    console.log(death.attackerWeapon.category);
                 }
             });
         });

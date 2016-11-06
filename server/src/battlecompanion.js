@@ -19,7 +19,7 @@ function dataReceived() {
     if (dataCount < 5) {
         console.log('Data received...');
         return;
-    };
+    }
 
     deathData.trackDeaths();
 }

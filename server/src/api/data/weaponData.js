@@ -2,7 +2,7 @@
 
 import restApi from '../restApi.js';
 import { RestApiQuery } from '../restApi.js';
-import { weaponDomain } from '../datatypes/Weapon.js';
+import { weaponDomain, weaponCategory } from '../datatypes/Weapon.js';
 
 const weaponDictionary = Object.create(null);
 
@@ -37,7 +37,8 @@ const buildWeaponDictionary = (data) => {
             item_id: id,
             name: weapon.name? weapon.name.en : '',
             // Just treat unknown weapons as infantry until proven otherwise
-            domain: (weaponDomainLookup[id] || weaponDomain.infantry)
+            domain: (weaponDomainLookup[id] || weaponDomain.infantry),
+            category: (weaponCategoryLookup[id] || null)
         }
     });
 };
@@ -62,20 +63,216 @@ function buildWeaponDomainLookup() {
     })
 }
 
-const baseWeapons = [
-    551, 552, 553, 724, 725, 726, // Xiphos AI Turret
-    700, 701, 702, 727, // Aspis AA turret
-    703, 704, 705, 730, // Spear AV turret
+let weaponCategoryLookup = Object.create(null);
+function buildWeaponCategoryLookup() {
+
+    const categories = {
+        galaxy: galaxy, esf: esf, liberator: liberator, valkyrie: valkyrie,
+        flash: flash, harasser: harasser, ant: ant, sunderer: sunderer,
+        lightning: lightning, mbt: mbt,
+        infantryExplosives: infantryExplosives
+    };
+
+    for(const key in categories) {
+        if(!categories.hasOwnProperty(key)) continue;
+
+        categories[key].forEach(id => {
+            weaponCategoryLookup[id] = weaponCategory[key]
+        });
+    }
+}
+
+const galaxy = [
+    5502, // M20 Drake left
+    5503, // M20 Drake right
+    5506, // M20 Drake
+    5507, // M20 Drake
+    5510, // M20 Drake
+    5511, // M20 Drake
+    5514, // M60-A Bulldog
+    5515, // M60-A Bulldog
+    5518, // M60-A Bulldog
+    5519, // M60-A Bulldog
+    5522, // M60-A Bulldog
+    5523, // M60-A Bulldog
+    5500, // M20 Drake top
+    5501, // M20 Drake tail
+    5504, // M20 Drake top
+    5505, // M20 Drake tail
+    5508, // M20 Drake
+    5509, // M20 Drake
 ];
 
-const groundVehicleWeapons = [
-    // Flash
+const esf = [
+
+    // Scythe Primary
+
+    4302, // Saron Laser Cannon
+    4304, // Maelstrom Turbo Laser
+    4305, // Light PPA
+    4445, // Antares LC
+
+    // Reaver Primary
+
+    4600, // M20 Mustang
+    4604, // Vortek Rotary
+    4605, // M30 Mustang AH
+    4745, // M20 Kestrel
+
+    // Mosquito Primary
+
+    4900, // M18 Needler
+    4906, // M14 Banshee
+    4911, // M18 Rotary
+    5050, // M18 Locust
+
+    // Scythe Secondary
+
+    4300, // Photon A2A Missile Pods
+    4301, // Dual Photon Pods
+    4446, // Hornet Missiles
+    4447, // Coyote Missiles
+
+    // Reaver Secondary
+
+    4601, // Breaker Rocket Pods
+    4602, // Tomcat A2AM Pods
+    4746, // Hornet Missiles
+    4747, // Coyote Missiles
+
+    // Mosquito Secondary
+
+    4903, // Hellfire Rocket Pods
+    4905, // Tomcat A2AM Pods
+    5051, // Hornet Missiles
+    5052, // Coyote Missiles
+];
+
+const liberator = [
+
+    // Primary
+
+    5206, // L-30R Vektor
+    5207, // L-30R Vektor
+    5208, // L-30R Vektor
+    5215, // CAS30 Tank Buster
+    5216, // CAS30 Tank Buster
+    5217, // CAS30 Tank Buster
+    5218, // L-24R Spur
+    5219, // L-24R Spur
+    5220, // L-24R Spur
+
+    // Belly
+
+    5209, // AP30 Shredder
+    5210, // AP30 Shredder
+    5211, // AP30 Shredder
+    5224, // C150 Dalton
+    5225, // C150 Dalton
+    5226, // C150 Dalton
+    5227, // L105 Zepher
+    5228, // L105 Zepher
+    5229, // L105 Zepher
+    5250, // L105 Zepher PX
+    5251, // L105 Zepher PX
+    5252, // L105 Zepher PX
+    5441, // Dual-75 Duster
+    5442, // Dual-75 Duster
+    5443, // Dual-75 Duster
+
+    // Tail
+
+    5200, // M20 Drake
+    5202, // M20 Drake
+    5204, // M20 Drake
+    5212, // A30 Walker
+    5213, // A30 Walker
+    5214, // A30 Walker
+    5221, // M60-A Bulldog
+    5222, // M60-A Bulldog
+    5223, // M60-A Bulldog
+    5494, // Hyena Missile Launcher
+    5495, // Hyena Missile Launcher
+    5496, // Hyena Missile Launcher
+];
+
+const valkyrie = [
+    6550, // M20 Wyvern
+    6551, // M20 Wyvern
+    6552, // M20 Wyvern
+    6553, // CAS 14-E
+    6554, // CAS 14-E
+    6555, // CAS 14-E
+    6556, // Hellion G20
+    6557, // Hellion G20
+    6558, // Hellion G20
+    6559, // Pelter Rocket Pod
+    6560, // Pelter Rocket Pod
+    6561, // Pelter Rocket Pod
+    6562, // VLG Missile Launcher
+    6563, // VLG Missile Launcher
+    6564, // VLG Missile Launcher
+];
+
+const flash = [
     2500, 2501, 2502, // Kobalt
     2507, 2508, 2509, // Basilisk
     2510, 2511, 2512, // Fury
     2657, 2658, 2659, // shotgun
+];
 
-    // Sundy
+const harasser = [
+    6100, // M12 Kobalt-H
+    6101, // M12 Kobalt-H
+    6102, // M12 Kobalt-H
+    6103, // M20 Basilisk-H
+    6104, // M20 Basilisk-H
+    6105, // M20 Basilisk-H
+    6106, // G30 Walker
+    6107, // G30 Walker
+    6108, // G30 Walker
+    6109, // G40-F Ranger
+    6110, // G40-F Ranger
+    6111, // G40-F Ranger
+    6112, // M60-G Bulldog-H
+    6113, // M60-G Bulldog-H
+    6114, // M60-G Bulldog-H
+    6115, // M40 Fury-H
+    6116, // M40 Fury-H
+    6117, // M40 Fury-H
+    6118, // E540 Halberd-H
+    6119, // E540 Halberd-H
+    6120, // E540 Halberd-H
+    6121, // G20 Vulcan-H
+    6122, // P525 Marauder-H
+    6123, // Enforcer ML65-H
+    6124, // C85 Canister-H
+    6125, // Proton II PPA-H
+    6126, // Saron HRB-H
+];
+
+const ant = [
+    803482, // M12 Kobalt
+    803483, // M12 Kobalt
+    803484, // M12 Kobalt
+    803485, // G30 Walker
+    803486, // G30 Walker
+    803487, // G30 Walker
+    803488, // G40-F Ranger
+    803489, // G40-F Ranger
+    803490, // G40-F Ranger
+    803491, // M40 Fury
+    803492, // M40 Fury
+    803493, // M40 Fury
+    803494, // M60-G Bulldog
+    803495, // M60-G Bulldog
+    803496, // M60-G Bulldog
+    803501, // M20 Basilisk
+    803502, // M20 Basilisk
+    803503, // M20 Basilisk
+];
+
+const sunderer = [
     2800, 2801, 2802, // Kobalt
     2803, 2804, 2805, // Basilisk
     2806, 2807, 2808, // Kobalt
@@ -84,15 +281,17 @@ const groundVehicleWeapons = [
     2874, 2875, 2876, 2877, 2878, 2879, // Fury
     3080, 3081, 3082, 3083, 3084, 3085, // Walker
     3086, 3087, 3088, 3089, 3090, 3091, // Ranger
+];
 
-    // Lightning
-
+const lightning = [
     3100, 3101, 3102, // Viper
     3103, 3104, 3105, // AP
     3106, 3107, 3108, // Skyguard
     3153, 3154, 3155, // HE
     3156, 3157, 3158, // HEAT
+];
 
+const mbt = [
     // Magrider
 
     3400, // Supernova PC
@@ -134,177 +333,23 @@ const groundVehicleWeapons = [
     4015, // E540 Halberd
     4016, // P2-120-R HEAT
     4029, // G30 Vulcan
-
-    // Harasser
-
-    6100, // M12 Kobalt-H
-    6101, // M12 Kobalt-H
-    6102, // M12 Kobalt-H
-    6103, // M20 Basilisk-H
-    6104, // M20 Basilisk-H
-    6105, // M20 Basilisk-H
-    6106, // G30 Walker
-    6107, // G30 Walker
-    6108, // G30 Walker
-    6109, // G40-F Ranger
-    6110, // G40-F Ranger
-    6111, // G40-F Ranger
-    6112, // M60-G Bulldog-H
-    6113, // M60-G Bulldog-H
-    6114, // M60-G Bulldog-H
-    6115, // M40 Fury-H
-    6116, // M40 Fury-H
-    6117, // M40 Fury-H
-    6118, // E540 Halberd-H
-    6119, // E540 Halberd-H
-    6120, // E540 Halberd-H
-    6121, // G20 Vulcan-H
-    6122, // P525 Marauder-H
-    6123, // Enforcer ML65-H
-    6124, // C85 Canister-H
-    6125, // Proton II PPA-H
-    6126, // Saron HRB-H
-
-    // ANT
-
-    803482, // M12 Kobalt
-    803483, // M12 Kobalt
-    803484, // M12 Kobalt
-    803485, // G30 Walker
-    803486, // G30 Walker
-    803487, // G30 Walker
-    803488, // G40-F Ranger
-    803489, // G40-F Ranger
-    803490, // G40-F Ranger
-    803491, // M40 Fury
-    803492, // M40 Fury
-    803493, // M40 Fury
-    803494, // M60-G Bulldog
-    803495, // M60-G Bulldog
-    803496, // M60-G Bulldog
-    803497, // WLT-Yellowjacket Mining Laser
-    803498, // WLT-Yellowjacket Mining Laser
-    803499, // WLT-Yellowjacket Mining Laser
-    803501, // M20 Basilisk
-    803502, // M20 Basilisk
-    803503, // M20 Basilisk
 ];
 
-const airVehicleWeapons = [
+const infantryExplosives = [
+    432,    // C-4
+    650,    // Tank Mine
+    880, 881, 882, // Sticky Grenade
+    1044,   // Bouncing Betty
+    1045,   // Proximity Mine
+    1095,   // AV Grenade
+    44505, 44605, 50051, // Frag Grenade
+    800623, // C-4 ARX
+];
 
-    // Scythe
-
-    4300, // Photon A2A Missile Pods
-    4301, // Dual Photon Pods
-    4302, // Saron Laser Cannon
-    4304, // Maelstrom Turbo Laser
-    4305, // Light PPA
-    4445, // Antares LC
-    4446, // Hornet Missiles
-    4447, // Coyote Missiles
-
-    // Reaver
-
-    4600, // M20 Mustang
-    4601, // Breaker Rocket Pods
-    4602, // Tomcat A2AM Pods
-    4604, // Vortek Rotary
-    4605, // M30 Mustang AH
-    4745, // M20 Kestrel
-    4746, // Hornet Missiles
-    4747, // Coyote Missiles
-
-    // Mosquito
-
-    4903, // Hellfire Rocket Pods
-    4905, // Tomcat A2AM Pods
-    4906, // M14 Banshee
-    4911, // M18 Rotary
-    5050, // M18 Locust
-    5051, // Hornet Missiles
-    5052, // Coyote Missiles
-
-    // Liberator
-
-    5200, // M20 Drake
-    5202, // M20 Drake
-    5204, // M20 Drake
-    5206, // L-30R Vektor
-    5207, // L-30R Vektor
-    5208, // L-30R Vektor
-    5209, // AP30 Shredder
-    5210, // AP30 Shredder
-    5211, // AP30 Shredder
-    5212, // A30 Walker
-    5213, // A30 Walker
-    5214, // A30 Walker
-    5215, // CAS30 Tank Buster
-    5216, // CAS30 Tank Buster
-    5217, // CAS30 Tank Buster
-    5218, // L-24R Spur
-    5219, // L-24R Spur
-    5220, // L-24R Spur
-    5221, // M60-A Bulldog
-    5222, // M60-A Bulldog
-    5223, // M60-A Bulldog
-    5224, // C150 Dalton
-    5225, // C150 Dalton
-    5226, // C150 Dalton
-    5227, // L105 Zepher
-    5228, // L105 Zepher
-    5229, // L105 Zepher
-    5250, // L105 Zepher PX
-    5251, // L105 Zepher PX
-    5252, // L105 Zepher PX
-    5441, // Dual-75 Duster
-    5442, // Dual-75 Duster
-    5443, // Dual-75 Duster
-    5494, // Hyena Missile Launcher
-    5495, // Hyena Missile Launcher
-    5496, // Hyena Missile Launcher
-
-    // Galaxy
-
-    5500, // M20 Drake
-    5501, // M20 Drake
-    5502, // M20 Drake
-    5503, // M20 Drake
-    5504, // M20 Drake
-    5505, // M20 Drake
-    5506, // M20 Drake
-    5507, // M20 Drake
-    5508, // M20 Drake
-    5509, // M20 Drake
-    5510, // M20 Drake
-    5511, // M20 Drake
-    5512, // A30 Walker
-    5513, // A30 Walker
-    5514, // M60-A Bulldog
-    5515, // M60-A Bulldog
-    5516, // A30 Walker
-    5517, // A30 Walker
-    5518, // M60-A Bulldog
-    5519, // M60-A Bulldog
-    5520, // A30 Walker
-    5521, // A30 Walker
-    5522, // M60-A Bulldog
-    5523, // M60-A Bulldog
-
-    6550, // M20 Wyvern
-    6551, // M20 Wyvern
-    6552, // M20 Wyvern
-    6553, // CAS 14-E
-    6554, // CAS 14-E
-    6555, // CAS 14-E
-    6556, // Hellion G20
-    6557, // Hellion G20
-    6558, // Hellion G20
-    6559, // Pelter Rocket Pod
-    6560, // Pelter Rocket Pod
-    6561, // Pelter Rocket Pod
-    6562, // VLG Missile Launcher
-    6563, // VLG Missile Launcher
-    6564, // VLG Missile Launcher
+const baseWeapons = [
+    551, 552, 553, 724, 725, 726, // Xiphos AI Turret
+    700, 701, 702, 727, // Aspis AA turret
+    703, 704, 705, 730, // Spear AV turret
 ];
 
 const maxWeapons = [
@@ -330,6 +375,7 @@ const maxWeapons = [
     16028, // NCM3 Raven
     16029, // NCM3 Raven
     16030, // MR1 Fracture
+
     16031, // MR1 Fracture
     16032, // Vortex VM21
     16033, // Vortex VM21
@@ -408,6 +454,11 @@ const constructionWeapons = [
     6002452, // Spear Anti-Vehicle Phalanx Turret
 ];
 
+const groundVehicleWeapons = [].concat(flash, harasser, ant, sunderer, lightning, mbt);
+
+const airVehicleWeapons = [].concat(valkyrie, esf, liberator, galaxy);
+
 buildWeaponDomainLookup();
+buildWeaponCategoryLookup();
 
 export default weaponData;
