@@ -19,12 +19,16 @@
   { item_id: '78', name: 'NC6 Gauss SAW' },
   { item_id: '79', name: 'T9 CARV' },
   { item_id: '80', name: 'Orion VS54' },
+
+
   { item_id: '84', name: 'Shrike' },
   { item_id: '85', name: 'ML-7' },
   { item_id: '86', name: 'S1' },
+
   { item_id: '87', name: 'NC14 Bolt Driver' },
   { item_id: '88', name: '99SV' },
   { item_id: '89', name: 'VA39 Spectre' },
+
   { item_id: '93', name: 'Medical Applicator 1' },
   { item_id: '94', name: 'Medical Applicator 1' },
   { item_id: '95', name: 'Medical Applicator 1' },
@@ -41,9 +45,11 @@
   { item_id: '200', name: 'Anti-Infantry MANA Turret' },
   { item_id: '201', name: 'Anti-Infantry MANA Turret' },
   { item_id: '202', name: 'Anti-Infantry MANA Turret' },
+
   { item_id: '266', name: 'Phoenix  AE' },
   { item_id: '267', name: 'Striker AE' },
   { item_id: '268', name: 'Lancer AE' },
+
   { item_id: '271', name: 'Carver' },
   { item_id: '285', name: 'Ripper' },
   { item_id: '286', name: 'Lumine Edge' },
@@ -155,6 +161,7 @@
   { item_id: '1629', name: 'Medical Applicator 5' },
   { item_id: '1630', name: 'Medical Applicator 6' },
   { item_id: '1849', name: 'NS Baron G5G' },
+
   { item_id: '1869', name: '19A Fortuna' },
   { item_id: '1879', name: 'NC6A GODSAW' },
   { item_id: '1884', name: 'The Brawler' },
@@ -179,10 +186,12 @@
   { item_id: '1984', name: 'GD Guardian' },
   { item_id: '1989', name: 'DMR-99' },
   { item_id: '1994', name: 'Revenant' },
+
   { item_id: '2001', name: 'NS-44P Commissioner' },
   { item_id: '2308', name: 'Hunter QCX' },
   { item_id: '2309', name: 'Heartstring' },
   { item_id: '2310', name: 'Blackheart' },
+
   { item_id: '2311', name: 'NS-30 Vandal' },
   { item_id: '2312', name: 'NS-30B Vandal' },
   { item_id: '2313', name: 'NS-30G Vandal' },
@@ -509,12 +518,15 @@
   { item_id: '7276', name: 'SVA-88' },
   { item_id: '7277', name: 'Flare VE6' },
   { item_id: '7278', name: 'Ursa' },
+
   { item_id: '7301', name: 'AF-8 RailJack' },
   { item_id: '7316', name: 'TRAP-M1' },
   { item_id: '7337', name: 'Phaseshift VX-S' },
+
   { item_id: '7358', name: 'AF-18 Stalker' },
   { item_id: '7365', name: 'SOAS-20' },
   { item_id: '7372', name: 'Artemis VX26' },
+
   { item_id: '7379', name: 'NC4-FB Mag-Shot' },
   { item_id: '7388', name: 'LA8 Rebel' },
   { item_id: '7389', name: 'LA3 Desperado' },
@@ -533,6 +545,9 @@
   { item_id: '7494', name: 'NS-7 PDW' },
   { item_id: '7495', name: 'NS-7B PDW' },
   { item_id: '7496', name: 'NS-7G PDW' },
+
+  // Max
+
   { item_id: '7505', name: 'AF-34 Mattock' },
   { item_id: '7506', name: 'AF-41 Hacksaw' },
   { item_id: '7507', name: 'AF-23 Grinder' },
@@ -542,6 +557,7 @@
   { item_id: '7519', name: 'Nebula VM20' },
   { item_id: '7520', name: 'Cosmos VM3' },
   { item_id: '7525', name: 'Blueshift VM5' },
+
   { item_id: '7528', name: 'NC05 Jackhammer' },
   { item_id: '7533', name: 'T7 Mini-Chaingun' },
   { item_id: '7540', name: 'Lasher X2' },
@@ -590,26 +606,32 @@
 
   { item_id: '19000', name: 'LC2 Lynx' },
   { item_id: '20000', name: 'VX6-7' },
+
   { item_id: '24000', name: 'Gauss SPR' },
   { item_id: '24001', name: 'SAS-R' },
   { item_id: '24002', name: 'Impetus' },
   { item_id: '24003', name: 'LA80' },
   { item_id: '24004', name: 'EM4 Longshot' },
   { item_id: '24007', name: 'AF-6 Shadow' },
+
   { item_id: '24008', name: 'Warden' },
+
   { item_id: '25000', name: 'M77-B' },
   { item_id: '25001', name: 'TSAR-42' },
   { item_id: '25002', name: 'KSR-35' },
   { item_id: '25003', name: 'SR-7' },
   { item_id: '25004', name: 'RAMS .50M' },
   { item_id: '25007', name: 'HSR-1' },
+
   { item_id: '25008', name: 'AMR-66' },
+
   { item_id: '26000', name: 'XM98' },
   { item_id: '26001', name: 'Ghost' },
   { item_id: '26002', name: 'Phantom VA23' },
   { item_id: '26003', name: 'V10' },
   { item_id: '26004', name: 'Parallax VX3' },
   { item_id: '26007', name: 'Nyx VX31' },
+
   { item_id: '26008', name: 'Eidolon VE33' },
   { item_id: '27000', name: 'AF-4 Cyclone' },
   { item_id: '27001', name: 'Blitz GD-10' },
@@ -620,6 +642,7 @@
   { item_id: '29000', name: 'Eridani SX5' },
   { item_id: '29001', name: 'Sirius SX12' },
   { item_id: '29005', name: 'Eridani SX5G' },
+
   { item_id: '33002', name: 'NC15 Phoenix' },
   { item_id: '33003', name: 'AF-22 Crow' },
   { item_id: '33004', name: 'Hawk GD-68' },
@@ -629,6 +652,7 @@
   { item_id: '35002', name: 'Lancer VS22' },
   { item_id: '35003', name: 'Hades VSH4' },
   { item_id: '35004', name: 'Nemesis VSH9' },
+
   { item_id: '39000', name: 'FA1 Barrage' },
   { item_id: '39001', name: 'TRS-12 Uppercut' },
   { item_id: '39002', name: 'TAS-16 Blackjack' },
@@ -643,8 +667,10 @@
   { item_id: '44605', name: 'Frag Grenade' },
   { item_id: '44705', name: 'Frag Grenade' },
   { item_id: '50051', name: 'EMP Grenade' },
+
   { item_id: '50560', name: 'NS Decimator' },
   { item_id: '50561', name: 'NS Annihilator ' },
+
   { item_id: '50562', name: 'Hunter QCX-P' },
   { item_id: '69999', name: 'NS-11P' },
   { item_id: '70998', name: 'NS-11A' },
@@ -709,12 +735,14 @@
   { item_id: '802771', name: 'NS-AM7 Archer' },
   { item_id: '802781', name: 'NS-44LB Blackhand' },
   { item_id: '802782', name: 'NS-44LG Blackhand' },
+
   { item_id: '802874', name: 'MR11 Gatekeeper' },
   { item_id: '802875', name: 'MR11 Gatekeeper-H' },
   { item_id: '802897', name: 'Aphelion VEX-4 ' },
   { item_id: '802898', name: 'Aphelion VEX-4H' },
   { item_id: '802899', name: 'M96 Mjolnir' },
   { item_id: '802900', name: 'M96 Mjolnir-H' },
+
   { item_id: '802902', name: 'NS Harrower' },
   { item_id: '802903', name: 'NS Campion' },
   { item_id: '802904', name: 'NS Victory' },

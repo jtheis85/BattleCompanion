@@ -1,31 +1,18 @@
 'use strict';
 
 const weaponDomain = {
+    infantry:      'WEAPON_DOMAIN_INFANTRY', // default
     airVehicle:    'WEAPON_DOMAIN_AIR',
     groundVehicle: 'WEAPON_DOMAIN_GROUND_VEHICLE',
-    infantry:      'WEAPON_DOMAIN_INFANTRY',
     max:           'WEAPON_DOMAIN_MAX',
     base:          'WEAPON_DOMAIN_BASE',
-    construction:  'WEAPON_DOMAIN_CONSTRUCTION',
-    misc:          'WEAPON_DOMAIN_MISC'
+    construction:  'WEAPON_DOMAIN_CONSTRUCTION'
 };
 
 const weaponCategory = {
-    galaxy:    'WEAPON_CATEGORY_GALAXY',
-    esf:       'WEAPON_CATEGORY_ESF',
-    liberator: 'WEAPON_CATEGORY_LIBERATOR',
-    valkyrie:  'WEAPON_CATEGORY_VALKYRIE',
-
-    flash:      'WEAPON_CATEGORY_FLASH',
-    harasser:   'WEAPON_CATEGORY_HARASSER',
-    ant:        'WEAPON_CATEGORY_ANT',
-    sunderer:   'WEAPON_CATEGORY_SUNDERER',
-    lightning:  'WEAPON_CATEGORY_LIGHTNING',
-    mbtPrimary: 'WEAPON_CATEGORY_MBT',
-
     // Most primaries and secondaries, melee, etc.
     // AI MANA turret, sentry turret
-    infSmallArms:   'WEAPON_CATEGORY_INFANTRY_SMALL_ARMS',
+    infSmallArms:   'WEAPON_CATEGORY_INFANTRY_SMALL_ARMS', // default
     infSniperRifle: 'WEAPON_CATEGORY_INFANTRY_SNIPER_RIFLE',
     // Dumbfires, lockons, AV MANA Turret
     infLauncher:    'WEAPON_CATEGORY_INFANTRY_LAUNCHER',
@@ -37,9 +24,20 @@ const weaponCategory = {
     // Bursters, long-range AV
     maxLongRange: 'WEAPON_CATEGORY_MAX_LONG_RANGE',
 
+    galaxy:    'WEAPON_CATEGORY_GALAXY',
+    esf:       'WEAPON_CATEGORY_ESF',
+    liberator: 'WEAPON_CATEGORY_LIBERATOR',
+    valkyrie:  'WEAPON_CATEGORY_VALKYRIE',
+
+    flash:      'WEAPON_CATEGORY_FLASH',
+    harasser:   'WEAPON_CATEGORY_HARASSER',
+    ant:        'WEAPON_CATEGORY_ANT',
+    sunderer:   'WEAPON_CATEGORY_SUNDERER',
+    lightning:  'WEAPON_CATEGORY_LIGHTNING',
+    mbt:        'WEAPON_CATEGORY_MBT',
+
     base:         'WEAPON_CATEGORY_BASE',
-    construction: 'WEAPON_CATEGORY_CONSTRUCTION',
-    unknown:      'WEAPON_CATEGORY_UNKNOWN'
+    construction: 'WEAPON_CATEGORY_CONSTRUCTION'
 };
 
 class Weapon {

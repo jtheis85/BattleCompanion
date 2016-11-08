@@ -38,7 +38,7 @@ const buildWeaponDictionary = (data) => {
             name: weapon.name? weapon.name.en : '',
             // Just treat unknown weapons as infantry until proven otherwise
             domain: (weaponDomainLookup[id] || weaponDomain.infantry),
-            category: (weaponCategoryLookup[id] || null)
+            category: (weaponCategoryLookup[id] || weaponCategory.infSmallArms)
         }
     });
 };
@@ -46,21 +46,22 @@ const buildWeaponDictionary = (data) => {
 // Map weapon IDs to domains
 let weaponDomainLookup = Object.create(null);
 function buildWeaponDomainLookup() {
-    airVehicleWeapons.forEach(id => {
-        weaponDomainLookup[id] = weaponDomain.airVehicle;
-    });
-    groundVehicleWeapons.forEach(id => {
-        weaponDomainLookup[id] = weaponDomain.groundVehicle;
-    });
-    maxWeapons.forEach(id => {
-        weaponDomainLookup[id] = weaponDomain.max;
-    });
-    baseWeapons.forEach(id => {
-        weaponDomainLookup[id] = weaponDomain.base;
-    });
-    constructionWeapons.forEach(id => {
-        weaponDomainLookup[id] = weaponDomain.construction;
-    })
+
+    const domains = {
+        airVehicle: airVehicle,
+        groundVehicle: groundVehicle,
+        max: max,
+        base: base,
+        construction: construction
+    };
+
+    for(const key in domains) {
+        if(!domains.hasOwnProperty(key)) continue;
+
+        domains[key].forEach(id => {
+            weaponDomainLookup[id] = weaponDomain[key];
+        })
+    }
 }
 
 let weaponCategoryLookup = Object.create(null);
@@ -68,9 +69,10 @@ function buildWeaponCategoryLookup() {
 
     const categories = {
         galaxy: galaxy, esf: esf, liberator: liberator, valkyrie: valkyrie,
-        flash: flash, harasser: harasser, ant: ant, sunderer: sunderer,
-        lightning: lightning, mbt: mbt,
-        infantryExplosives: infantryExplosives
+        flash: flash, harasser: harasser, ant: ant,
+        sunderer: sunderer, lightning: lightning, mbt: mbt,
+        infExplosives: infExplosives, infSniperRifle: infSniperRifle, infLauncher: infLauncher,
+        maxSmallArms: maxSmallArms, maxLongRange: maxLongRange
     };
 
     for(const key in categories) {
@@ -249,6 +251,9 @@ const harasser = [
     6124, // C85 Canister-H
     6125, // Proton II PPA-H
     6126, // Saron HRB-H
+    802875, // MR11 Gatekeeper-H
+    802898, // Aphelion VEX-4H
+    802900, // M96 Mjolnir-H
 ];
 
 const ant = [
@@ -305,6 +310,7 @@ const mbt = [
     3442, // Saron HRB
     3460, // Supernova FPC
     3461, // Supernova VPC
+    802897, // Aphelion VEX-4
 
     // Vanguard
 
@@ -319,6 +325,7 @@ const mbt = [
     3730, // Titan-150 AP
     3731, // Titan-150 HE
     3756, // 150mm Titan-R HEAT
+    802899, // M96 Mjolnir
 
     // Prowler
 
@@ -333,62 +340,110 @@ const mbt = [
     4015, // E540 Halberd
     4016, // P2-120-R HEAT
     4029, // G30 Vulcan
+    802874, // MR11 Gatekeeper
 ];
 
-const infantryExplosives = [
+const infSniperRifle = [
+    87, // NC14 Bolt Driver
+    88, // 99SV
+    89, // VA39 Spectre
+    2311,  // NS-30 Vandal
+    2312,  // NS-30B Vandal
+    2313,  // NS-30G Vandal
+    7301,  // AF-8 RailJack
+    7316,  // TRAP-M1
+    7337,  // Phaseshift VX-S
+    24000, // Gauss SPR
+    24001, // SAS-R
+    24002, // Impetus
+    24003, // LA80
+    24004, // EM4 Longshot
+    24007, // AF-6 Shadow
+    25000, // M77-B
+    25001, // TSAR-42
+    25002, // KSR-35
+    25003, // SR-7
+    25004, // RAMS .50M
+    25007, // HSR-1
+    26000, // XM98
+    26001, // Ghost
+    26002, // Phantom VA23
+    26003, // V10
+    26004, // Parallax VX3
+    26007, // Nyx VX31
+    6002732, // Parallax VX3-AE
+    6002745, // RAMS-AE .50M
+    6002758, // EM4-AE Longshot
+];
+
+const infLauncher = [
+    84, // Shrike
+    85, // ML-7
+    86, // S1
+    266, //Phoenix  AE
+    267, //Striker AE
+    268, //Lancer AE
+    33002, // NC15 Phoenix
+    33003, // AF-22 Crow
+    33004, // Hawk GD-68
+    34002, // T2 Striker
+    34003, // M9 SKEP Launcher
+    34004, // ASP-30 Grounder
+    35002, // Lancer VS22
+    35003, // Hades VSH4
+    35004, // Nemesis VSH9
+    50560, // NS Decimator
+    50561, // NS Annihilator
+    71563, // Anti-Vehicle MANA Turret
+    71564, // Anti-Vehicle MANA Turret
+    71565, // Anti-Vehicle MANA Turret
+    802299, // NS Decimator-G
+    802300, // NS Decimator-B
+    802301, // NS Annihilator-G
+    802302, // NS Annihilator-B
+    802969, // NS-R3 Swarm
+    6002637, // NS-R3 "Ravenous" Swarm
+];
+
+const infExplosives = [
     432,    // C-4
     650,    // Tank Mine
     880, 881, 882, // Sticky Grenade
     1044,   // Bouncing Betty
     1045,   // Proximity Mine
     1095,   // AV Grenade
-    44505, 44605, 50051, // Frag Grenade
+    44505, 44605, 44705, // Frag Grenade
     800623, // C-4 ARX
 ];
 
-const baseWeapons = [
-    551, 552, 553, 724, 725, 726, // Xiphos AI Turret
-    700, 701, 702, 727, // Aspis AA turret
-    703, 704, 705, 730, // Spear AV turret
-];
-
-const maxWeapons = [
+const maxSmallArms = [
     1082, 1083, 1084, // Max Punch
+    7505, // AF-34 Mattock
+    7506, // AF-41 Hacksaw
+    7507, // AF-23 Grinder
+    7512, // M6 Onslaught
+    7513, // M2 Mutilator
+    7518, // MRC3 Mercy
+    7519, // Nebula VM20
+    7520, // Cosmos VM3
+    7525, // Blueshift VM5
     15000, // M1 Heavy Cycler
     15001, // M3 Pounder HEG
-    15004, // NS-10 Burster
     15012, // M1 Heavy Cycler
     15013, // M3 Pounder HEG
-    15016, // NS-10 Burster
     15024, // M6 Onslaught
     15025, // M2 Mutilator
     15030, // MRC3 Mercy
     16000, // NCM1 Scattercannon
-    16001, // NCM2 Falcon
-    16004, // NS-10 Burster
     16012, // NCM1 Scattercannon
-    16013, // NCM2 Falcon
-    16016, // NS-10 Burster
     16024, // AF-34 Mattock
     16025, // AF-41 Hacksaw
     16026, // AF-23 Grinder
-    16028, // NCM3 Raven
-    16029, // NCM3 Raven
-    16030, // MR1 Fracture
-
-    16031, // MR1 Fracture
-    16032, // Vortex VM21
-    16033, // Vortex VM21
     17000, // Quasar VM1
-    17001, // Comet VM2
-    17004, // NS-10 Burster
     17012, // Quasar VM1
-    17013, // Comet VM2
-    17016, // NS-10 Burster
     17024, // Nebula VM20
     17025, // Cosmos VM3
     17030, // Blueshift VM5
-
     804652, // NS-20 Gorgon
     804653, // NS-20 Gorgon
     804654, // NS-20 Gorgon
@@ -407,6 +462,25 @@ const maxWeapons = [
     804726, // NS-20G Gorgon
     804727, // NS-20G Gorgon
     804728, // NS-20G Gorgon
+];
+
+const maxLongRange = [
+    15004, // NS-10 Burster
+    15016, // NS-10 Burster
+    16001, // NCM2 Falcon
+    16004, // NS-10 Burster
+    16013, // NCM2 Falcon
+    16016, // NS-10 Burster
+    16028, // NCM3 Raven
+    16029, // NCM3 Raven
+    16030, // MR1 Fracture
+    16031, // MR1 Fracture
+    16032, // Vortex VM21
+    16033, // Vortex VM21
+    17001, // Comet VM2
+    17004, // NS-10 Burster
+    17013, // Comet VM2
+    17016, // NS-10 Burster
     804741, // NS-10B Burster
     804742, // NS-10B Burster
     804743, // NS-10B Burster
@@ -421,7 +495,13 @@ const maxWeapons = [
     804752, // NS-10G Burster
 ];
 
-const constructionWeapons = [
+const base = [
+    551, 552, 553, 724, 725, 726, // Xiphos AI Turret
+    700, 701, 702, 727, // Aspis AA turret
+    703, 704, 705, 730, // Spear AV turret
+];
+
+const construction = [
     803427, // Spear Anti-Vehicle Tower
     803428, // Spear Anti-Vehicle Tower
     803429, // Spear Anti-Vehicle Tower
@@ -454,9 +534,11 @@ const constructionWeapons = [
     6002452, // Spear Anti-Vehicle Phalanx Turret
 ];
 
-const groundVehicleWeapons = [].concat(flash, harasser, ant, sunderer, lightning, mbt);
+const max = [].concat(maxSmallArms, maxLongRange);
 
-const airVehicleWeapons = [].concat(valkyrie, esf, liberator, galaxy);
+const groundVehicle = [].concat(flash, harasser, ant, sunderer, lightning, mbt);
+
+const airVehicle = [].concat(valkyrie, esf, liberator, galaxy);
 
 buildWeaponDomainLookup();
 buildWeaponCategoryLookup();
