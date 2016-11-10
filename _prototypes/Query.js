@@ -1,6 +1,6 @@
 'use strict';
 
-var serviceID = require('./Service.js').getNamespacedID();
+var serviceID = require('./service.js').getNamespacedID();
 
 const censusDomain = 'https://census.daybreakgames.com';
 const verb         = 'get';

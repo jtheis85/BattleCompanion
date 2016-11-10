@@ -1,0 +1,17 @@
+{
+  "name": "battlecompanion-server",
+  "version": "0.0.1",
+  "dependencies": {
+    "concat-stream": "^1.5.2",
+    "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "app": "node lib/battlecompanion.js"
+  }
+}
