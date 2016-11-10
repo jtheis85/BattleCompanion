@@ -1,8 +1,9 @@
 'use strict';
 
-import wsApi         from '../wsApi.js';
-import { subscribe } from '../WsApiSubscription.js';
-import Death         from '../datatypes/Death.js';
+import wsApi              from '../wsApi.js';
+import { subscribe }      from '../WsApiSubscription.js';
+import Death              from '../datatypes/Death.js';
+import { weaponCategory } from '../datatypes/Weapon.js';
 
 import loadoutData from '../data/loadoutData.js';
 import factionData from '../data/factionData.js';
@@ -25,8 +26,21 @@ const deathData = {
                 if(!data.payload) return;
                 const death = toDeath(data);
                 if(death.attackerWeapon &&
-                    death.attackerWeapon.category) {
-                    console.log(death.attackerWeapon.category);
+                    death.attackerWeapon.category
+                    && death.attackerWeapon.category !== weaponCategory.infSmallArms) {
+
+                    const attackingFaction = death.attackerLoadout.faction.abbreviation;
+                    const victimFaction = death.victimLoadout.faction.abbreviation;
+                    const worldName = death.world ? death.world.name : 'unknown';
+                    const zoneName  = death.zone  ? death.zone.name : 'unknown';
+
+                    console.log({
+                        factions: `${attackingFaction} -> ${victimFaction}`,
+                        domain:   death.attackerWeapon.domain,
+                        category: death.attackerWeapon.category,
+                        time:     death.timestamp,
+                        location: `${worldName} - ${zoneName}`
+                    });
                 }
             });
         });

@@ -6,7 +6,6 @@ class Death {
         attackerWeapon,
         attackerVehicle,
         victimLoadout,
-        victimVehicle,
         timestamp,
         world,
         zone

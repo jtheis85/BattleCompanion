@@ -72,7 +72,8 @@ function buildWeaponCategoryLookup() {
         flash: flash, harasser: harasser, ant: ant,
         sunderer: sunderer, lightning: lightning, mbt: mbt,
         infExplosives: infExplosives, infSniperRifle: infSniperRifle, infLauncher: infLauncher,
-        maxSmallArms: maxSmallArms, maxLongRange: maxLongRange
+        maxSmallArms: maxSmallArms, maxLongRange: maxLongRange,
+        base: base, construction: construction
     };
 
     for(const key in categories) {
