@@ -3,3 +3,5 @@ node_modules
 *bundle.js
 _dependencies
 server/lib
+
+npm-debug.log
