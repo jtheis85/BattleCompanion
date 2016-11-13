@@ -2,6 +2,7 @@
 
 import restApi from '../restApi.js';
 import { RestApiQuery } from '../restApi.js';
+import Weapon from '../datatypes/Weapon.js';
 import { weaponDomain, weaponCategory } from '../datatypes/Weapon.js';
 
 const weaponDictionary = Object.create(null);
@@ -33,13 +34,13 @@ const weaponData = {
 const buildWeaponDictionary = (data) => {
     data.item_list.forEach(weapon => {
         const id = parseInt(weapon.item_id);
-        weaponDictionary[id] = {
-            item_id: id,
-            name: weapon.name? weapon.name.en : '',
+        weaponDictionary[id] = new Weapon(
+            id,
+            weapon.name? weapon.name.en : '',
             // Just treat unknown weapons as infantry until proven otherwise
-            domain: (weaponDomainLookup[id] || weaponDomain.infantry),
-            category: (weaponCategoryLookup[id] || weaponCategory.infSmallArms)
-        }
+            (weaponDomainLookup[id] || weaponDomain.infantry),
+            (weaponCategoryLookup[id] || weaponCategory.infSmallArms)
+        );
     });
 };
 
@@ -64,7 +65,7 @@ function buildWeaponDomainLookup() {
     }
 }
 
-let weaponCategoryLookup = Object.create(null);
+const weaponCategoryLookup = Object.create(null);
 function buildWeaponCategoryLookup() {
 
     const categories = {

@@ -30,18 +30,38 @@ function onDataReceived(data) {
     if(!data.payload) return;
     const vehicleDestroy = toVehicleDestroy(data);
     if(vehicleDestroy) {
-        console.log(vehicleDestroy);
+        let attacker = vehicleDestroy.attackerVehicle
+            ? vehicleDestroy.attackerVehicle.domain
+            : vehicleDestroy.attackerWeapon
+                ? vehicleDestroy.attackerWeapon.category
+                : 'Unknown';
+        let victim = vehicleDestroy.victimVehicle
+            ? vehicleDestroy.victimVehicle.domain
+            : 'None';
+        console.log(`${attacker} -> ${victim}`);
+        if(victim === 'None') {
+            console.log(data);
+        }
     }
 
 }
 
 function toVehicleDestroy(apiObject) {
     const data = apiObject.payload;
+
+    const attackerLoadout = loadoutData.getLoadout(data.attacker_loadout_id);
+    const attackerFaction = attackerLoadout
+        ? attackerLoadout.faction : null;
+
+    const victimLoadout = loadoutData.getLoadout(data.loadout_id);
+    const victimFaction = victimLoadout
+        ? victimLoadout.faction : null;
+
     return new VehicleDestroy(
-        loadoutData.getLoadout(data.attacker_loadout_id).faction,
+        attackerFaction,
         weaponData.getWeapon(data.attacker_weapon_id),
         vehicleData.getVehicle(data.attacker_vehicle_id),
-        loadoutData.getLoadout(data.attacker_loadout_id).faction,
+        victimFaction,
         vehicleData.getVehicle(data.vehicle_id),
         data.timestamp,
         worldData.getWorld(data.world_id),

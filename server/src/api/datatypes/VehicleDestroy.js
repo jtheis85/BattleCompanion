@@ -18,8 +18,8 @@
 class VehicleDestroy {
     constructor(
         attackerFaction,
-        attackerVehicle,
         attackerWeapon,
+        attackerVehicle,
         victimFaction,
         victimVehicle,
         timestamp,
@@ -27,8 +27,8 @@ class VehicleDestroy {
         zone
     ) {
         this.attackerFaction = attackerFaction;
-        this.attackerWeapon  = attackerWeapon;
         this.attackerVehicle = attackerVehicle;
+        this.attackerWeapon  = attackerWeapon;
         this.victimFaction   = victimFaction;
         this.victimVehicle   = victimVehicle;
         this.timestamp       = timestamp;
