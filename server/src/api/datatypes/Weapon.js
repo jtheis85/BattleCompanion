@@ -50,7 +50,7 @@ class Weapon {
         this.id             = id;
         this.name           = name;
         this.weaponDomain   = weaponDomain;
-        this.weaponCategory = weaponCategory;
+        this.category = weaponCategory;
     }
 }
 
