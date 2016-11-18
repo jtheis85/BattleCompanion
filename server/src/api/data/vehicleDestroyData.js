@@ -2,7 +2,7 @@
 
 import wsApi          from '../wsApi.js';
 import { subscribe }  from '../WsApiSubscription.js';
-import VehicleDestroy from '../datatypes/VehicleDestroy.js';
+import Death          from '../datatypes/Death.js';
 
 import loadoutData from '../data/loadoutData.js';
 import worldData   from '../data/worldData.js';
@@ -28,15 +28,15 @@ function onConnect() {
 
 function onDataReceived(data) {
     if(!data.payload) return;
-    const vehicleDestroy = toVehicleDestroy(data);
-    if(vehicleDestroy) {
-        let attacker = vehicleDestroy.attackerVehicle
-            ? vehicleDestroy.attackerVehicle.domain
-            : vehicleDestroy.attackerWeapon
-                ? vehicleDestroy.attackerWeapon.category
+    const death = toDeath(data);
+    if(death) {
+        let attacker = death.attackerVehicle
+            ? death.attackerVehicle.domain
+            : death.attackerWeapon
+                ? death.attackerWeapon.category
                 : 'Unknown';
-        let victim = vehicleDestroy.victimVehicle
-            ? vehicleDestroy.victimVehicle.domain
+        let victim = death.victimVehicle
+            ? death.victimVehicle.domain
             : 'None';
         console.log(`${attacker} -> ${victim}`);
         if(victim === 'None') {
@@ -46,7 +46,7 @@ function onDataReceived(data) {
 
 }
 
-function toVehicleDestroy(apiObject) {
+function toDeath(apiObject) {
     const data = apiObject.payload;
 
     const attackerLoadout = loadoutData.getLoadout(data.attacker_loadout_id);
@@ -57,10 +57,10 @@ function toVehicleDestroy(apiObject) {
     const victimFaction = victimLoadout
         ? victimLoadout.faction : null;
 
-    return new VehicleDestroy(
+    return new Death(
         attackerFaction,
-        weaponData.getWeapon(data.attacker_weapon_id),
         vehicleData.getVehicle(data.attacker_vehicle_id),
+        weaponData.getWeapon(data.attacker_weapon_id),
         victimFaction,
         vehicleData.getVehicle(data.vehicle_id),
         data.timestamp,

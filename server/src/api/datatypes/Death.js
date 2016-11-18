@@ -2,18 +2,20 @@
 
 class Death {
     constructor(
-        attackerLoadout,
-        attackerWeapon,
+        attackerFaction,
         attackerVehicle,
-        victimLoadout,
+        attackerWeapon,
+        victimFaction,
+        victimVehicle,
         timestamp,
         world,
         zone
     ) {
-        this.attackerLoadout = attackerLoadout;
-        this.attackerWeapon  = attackerWeapon;
+        this.attackerFaction = attackerFaction;
         this.attackerVehicle = attackerVehicle;
-        this.victimLoadout   = victimLoadout;
+        this.attackerWeapon  = attackerWeapon;
+        this.victimFaction   = victimFaction;
+        this.victimVehicle   = victimVehicle;
         this.timestamp       = timestamp;
         this.world           = world;
         this.zone            = zone;

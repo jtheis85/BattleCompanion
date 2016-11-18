@@ -14,49 +14,72 @@ import zoneData    from '../data/zoneData.js';
 
 const deathData = {
     trackDeaths() {
-        wsApi.connect(() => {
-            const deathSub = {
-                ...subscribe,
-                // NOTE! currently the api seems to ignore specifying the world when characters is specified as all.
-                worlds: ['17'],
-                characters: ['all'],
-                eventNames: ['Death']
-            };
-            wsApi.subscribe(deathSub, (data) => {
-                if(!data.payload) return;
-                const death = toDeath(data);
-                if(death.attackerWeapon &&
-                    death.attackerWeapon.category
-                    && death.attackerWeapon.category !== weaponCategory.infSmallArms) {
-
-                    const attackingFaction = death.attackerLoadout.faction.abbreviation;
-                    const victimFaction = death.victimLoadout.faction.abbreviation;
-                    const worldName = death.world ? death.world.name : 'unknown';
-                    const zoneName  = death.zone  ? death.zone.name : 'unknown';
-
-                    console.log({
-                        factions: `${attackingFaction} -> ${victimFaction}`,
-                        domain:   death.attackerWeapon.domain,
-                        category: death.attackerWeapon.category,
-                        time:     death.timestamp,
-                        location: `${worldName} - ${zoneName}`
-                    });
-                }
-            });
-        });
+        wsApi.connect(onConnect);
     }
 };
 
+function onConnect() {
+    const deathSub = {
+        ...subscribe,
+        // NOTE! currently the api seems to ignore specifying the world when characters is specified as all.
+        worlds: ['17'],
+        characters: ['all'],
+        eventNames: ['Death']
+    };
+    wsApi.subscribe(deathSub, onDataReceived);
+}
+
+function onDataReceived(data) {
+    if(!data.payload) return;
+    const death = toDeath(data);
+    const weapon = death.attackerWeapon;
+    if(weapon && weapon.category &&
+        weapon.category !== weaponCategory.infSmallArms) {
+
+        const attackingFaction = death.attackerFaction.abbreviation;
+        const victimFaction    = death.victimFaction.abbreviation;
+        const worldName        = death.world ? death.world.name : 'unknown';
+        const zoneName         = death.zone  ? death.zone.name : 'unknown';
+
+        console.log({
+            factions: `${attackingFaction} -> ${victimFaction}`,
+            domain:   weapon.domain,
+            category: weapon.category,
+            time:     death.timestamp,
+            location: `${worldName} - ${zoneName}`
+        });
+    }
+}
+
 function toDeath(apiObject) {
+
+    // Pull data out of the API object
     const data = apiObject.payload;
+    const attackerLoadout = loadoutData.getLoadout(data.attacker_loadout_id);
+    const attackerVehicle = vehicleData.getVehicle(data.attacker_vehicle_id);
+    const attackerWeapon  = weaponData .getWeapon(data.attacker_weapon_id);
+    const victimLoadout   = loadoutData.getLoadout(data.character_loadout_id);
+    const world           = worldData  .getWorld(data.world_id);
+    const zone            = zoneData   .getZone(data.zone_id);
+    const timestamp       = data.timestamp;
+
+    // Vehicle destruction is handled elsewhere
+    const victimVehicle = null;
+
+    // Protect against referencing undefined properties
+    // e.g. no attacker (suicide)
+    const attackerFaction = attackerLoadout ? attackerLoadout.faction : null;
+    const victimFaction   = victimLoadout ? victimLoadout.faction : null;
+
     return new Death(
-        loadoutData.getLoadout(data.attacker_loadout_id),
-        weaponData.getWeapon(data.attacker_weapon_id),
-        vehicleData.getVehicle(data.attacker_vehicle_id),
-        loadoutData.getLoadout(data.character_loadout_id),
-        data.timestamp,
-        worldData.getWorld(data.world_id),
-        zoneData.getZone(data.zone_id)
+        attackerFaction,
+        attackerVehicle,
+        attackerWeapon,
+        victimFaction,
+        victimVehicle,
+        timestamp,
+        world,
+        zone
     )
 }
 

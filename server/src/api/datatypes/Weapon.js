@@ -44,13 +44,13 @@ class Weapon {
     constructor(
         id,
         name,
-        weaponDomain   = weaponDomain.infantry,
-        weaponCategory = weaponCategory.infSmallArms) {
+        domain   = weaponDomain.infantry,
+        category = weaponCategory.infSmallArms) {
 
-        this.id             = id;
-        this.name           = name;
-        this.weaponDomain   = weaponDomain;
-        this.category = weaponCategory;
+        this.id       = id;
+        this.name     = name;
+        this.domain   = domain;
+        this.category = category;
     }
 }
 
