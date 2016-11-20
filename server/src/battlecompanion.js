@@ -1,5 +1,7 @@
 'use strict';
 
+import wsApi from './api/wsApi.js';
+
 import deathData          from './api/data/deathData.js';
 import vehicleDestroyData from './api/data/vehicleDestroyData.js';
 import loadoutData        from './api/data/loadoutData.js';
@@ -21,7 +23,8 @@ function dataReceived() {
         console.log('Data received...');
         return;
     }
-
-    vehicleDestroyData.trackVehicleDestruction();
-    //deathData.trackDeaths();
+    wsApi.connect(() => {
+        vehicleDestroyData.trackVehicleDestruction();
+        deathData.trackDeaths();
+    });
 }

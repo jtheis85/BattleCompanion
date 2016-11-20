@@ -12,22 +12,17 @@ import zoneData    from '../data/zoneData.js';
 
 const vehicleDestroyData = {
     trackVehicleDestruction() {
-        wsApi.connect(onConnect);
+        const subscription = {
+            ...subscribe,
+            worlds: ['17'],
+            characters: ['all'],
+            eventNames: ['VehicleDestroy']
+        };
+        wsApi.subscribe(subscription, onDataReceived);
     }
 };
 
-function onConnect() {
-    const subscription = {
-        ...subscribe,
-        worlds: ['17'],
-        characters: ['all'],
-        eventNames: ['VehicleDestroy']
-    };
-    wsApi.subscribe(subscription, onDataReceived);
-}
-
 function onDataReceived(data) {
-    if(!data.payload) return;
     const death = toDeath(data);
     if(death) {
         let attacker = death.attackerVehicle
@@ -40,14 +35,13 @@ function onDataReceived(data) {
             : 'None';
         console.log(`${attacker} -> ${victim}`);
         if(victim === 'None') {
-            console.log(data);
+            //console.log(data);
         }
     }
 
 }
 
-function toDeath(apiObject) {
-    const data = apiObject.payload;
+function toDeath(data) {
 
     const attackerLoadout = loadoutData.getLoadout(data.attacker_loadout_id);
     const attackerFaction = attackerLoadout

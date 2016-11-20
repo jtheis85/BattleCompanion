@@ -14,30 +14,25 @@ import zoneData    from '../data/zoneData.js';
 
 const deathData = {
     trackDeaths() {
-        wsApi.connect(onConnect);
+        const deathSub = {
+            ...subscribe,
+            // NOTE! currently the api seems to ignore specifying the world when characters is specified as all.
+            worlds: ['17'],
+            characters: ['all'],
+            eventNames: ['Death']
+        };
+        wsApi.subscribe(deathSub, onDataReceived);
     }
 };
 
-function onConnect() {
-    const deathSub = {
-        ...subscribe,
-        // NOTE! currently the api seems to ignore specifying the world when characters is specified as all.
-        worlds: ['17'],
-        characters: ['all'],
-        eventNames: ['Death']
-    };
-    wsApi.subscribe(deathSub, onDataReceived);
-}
-
 function onDataReceived(data) {
-    if(!data.payload) return;
     const death = toDeath(data);
     const weapon = death.attackerWeapon;
     if(weapon && weapon.category &&
         weapon.category !== weaponCategory.infSmallArms) {
 
-        const attackingFaction = death.attackerFaction.abbreviation;
-        const victimFaction    = death.victimFaction.abbreviation;
+        const attackingFaction = death.attackerFaction ?  death.attackerFaction.abbreviation : 'None';
+        const victimFaction    = death.victimFaction ? death.victimFaction.abbreviation : 'None';
         const worldName        = death.world ? death.world.name : 'unknown';
         const zoneName         = death.zone  ? death.zone.name : 'unknown';
 
@@ -51,10 +46,9 @@ function onDataReceived(data) {
     }
 }
 
-function toDeath(apiObject) {
+function toDeath(data) {
 
     // Pull data out of the API object
-    const data = apiObject.payload;
     const attackerLoadout = loadoutData.getLoadout(data.attacker_loadout_id);
     const attackerVehicle = vehicleData.getVehicle(data.attacker_vehicle_id);
     const attackerWeapon  = weaponData .getWeapon(data.attacker_weapon_id);

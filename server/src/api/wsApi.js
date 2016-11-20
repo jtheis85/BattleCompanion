@@ -3,6 +3,7 @@
 import WebSocket from 'ws';
 
 var ws;
+var subs = {};
 
 const wsApi = {
     connect(readyCallback) {
@@ -26,14 +27,23 @@ function initializeConnection(readyCallback) {
     ws = new WebSocket(url);
     ws.onopen = () => {
         readyCallback();
+
+        ws.onmessage = (e) => {
+            var data = JSON.parse(e.data);
+            if(!data.payload) return;
+            const eventName = data.payload.event_name;
+            if(subs.hasOwnProperty(eventName)) {
+                // Call the apropriate subscription callback
+                subs[eventName](data.payload);
+            }
+        };
     };
 }
 
 function subscribe(subscription, eventReceivedCallback) {
     ws.send(JSON.stringify(subscription));
-    ws.onmessage = (e) => {
-        eventReceivedCallback(JSON.parse(e.data));
-    }
+    // Keep track of the subscription's callback, keyed by eventName
+    subs[subscription.eventNames[0]] = eventReceivedCallback;
 }
 
 function dropConnection(completedCallback) {
