@@ -1,0 +1,25 @@
+emerald: {
+    indar: {
+        vs: {
+
+        },
+        tr: {
+
+        },
+        nc: {
+
+        }
+    },
+    esamir: {
+
+    },
+    amerish: {
+
+    },
+    hossin: {
+
+    }
+},
+connery: {
+
+}

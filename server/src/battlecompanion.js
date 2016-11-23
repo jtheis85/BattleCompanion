@@ -1,7 +1,11 @@
 'use strict';
 
+
+import aggregator from './aggregator.js';
+
 import wsApi from './api/wsApi.js';
 
+import factionData        from './api/data/factionData.js';
 import deathData          from './api/data/deathData.js';
 import vehicleDestroyData from './api/data/vehicleDestroyData.js';
 import loadoutData        from './api/data/loadoutData.js';
@@ -23,8 +27,28 @@ function dataReceived() {
         console.log('Data received...');
         return;
     }
-    wsApi.connect(() => {
-        vehicleDestroyData.trackVehicleDestruction();
-        deathData.trackDeaths();
-    });
+
+    let worlds = [];
+    let zones = [];
+    let factions = [];
+    for(let key in worldData.getWorlds()) {
+        worlds.push(worldData.getWorlds()[key]);
+    }
+    for(let key in zoneData.getZones()) {
+        const zone = zoneData.getZones()[key];
+        if (parseInt(zone.id) > 10) continue; // Ignore non-live zones
+        zones.push(zone);
+    }
+    for(let key in factionData) {
+        factions.push(factionData[key]);
+    }
+
+    aggregator.initialize(worlds, zones, factions);
+    console.log(aggregator.get());
+
+
+    //wsApi.connect(() => {
+    //    vehicleDestroyData.trackVehicleDestruction();
+    //    deathData.trackDeaths();
+    //});
 }

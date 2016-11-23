@@ -25,20 +25,35 @@ const vehicleDestroyData = {
 function onDataReceived(data) {
     const death = toDeath(data);
     if(death) {
-        let attacker = death.attackerVehicle
+        const weapon = death.attackerWeapon;
+        const weaponDomain = weapon ? weapon.domain : 'Unknown';
+        const weaponCategory = weapon ? weapon.category : 'Unknown';
+
+        const attackingFaction = death.attackerFaction ? death.attackerFaction.abbreviation : 'None';
+        const victimFaction    = death.victimFaction   ? death.victimFaction.abbreviation : 'None';
+
+        const attacker = death.attackerVehicle
             ? death.attackerVehicle.domain
             : death.attackerWeapon
                 ? death.attackerWeapon.category
                 : 'Unknown';
-        let victim = death.victimVehicle
+        const victim = death.victimVehicle
             ? death.victimVehicle.domain
             : 'None';
-        console.log(`${attacker} -> ${victim}`);
-        if(victim === 'None') {
-            //console.log(data);
-        }
-    }
 
+        const worldName = death.world ? death.world.name : 'unknown';
+        const zoneName  = death.zone  ? death.zone.name : 'unknown';
+
+        console.log({
+            type:          'vehicle death',
+            factions:      `${attackingFaction} -> ${victimFaction}`,
+            domain:        weaponDomain,
+            category:      weaponCategory,
+            victimVehicle: victim,
+            time:          death.timestamp,
+            location:      `${worldName} - ${zoneName}`
+        });
+    }
 }
 
 function toDeath(data) {

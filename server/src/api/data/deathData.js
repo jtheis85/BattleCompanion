@@ -37,6 +37,7 @@ function onDataReceived(data) {
         const zoneName         = death.zone  ? death.zone.name : 'unknown';
 
         console.log({
+            type:     'character death',
             factions: `${attackingFaction} -> ${victimFaction}`,
             domain:   weapon.domain,
             category: weapon.category,
