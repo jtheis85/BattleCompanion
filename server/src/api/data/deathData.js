@@ -12,6 +12,8 @@ import vehicleData from '../data/vehicleData.js';
 import weaponData  from '../data/weaponData.js';
 import zoneData    from '../data/zoneData.js';
 
+const deaths = [];
+
 const deathData = {
     trackDeaths() {
         const deathSub = {
@@ -22,28 +24,46 @@ const deathData = {
             eventNames: ['Death']
         };
         wsApi.subscribe(deathSub, onDataReceived);
+        setInterval(expireDeaths, 5000);
     }
 };
 
 function onDataReceived(data) {
     const death = toDeath(data);
     const weapon = death.attackerWeapon;
-    if(weapon && weapon.category &&
-        weapon.category !== weaponCategory.infSmallArms) {
+    if(weapon && weapon.category) {
 
         const attackingFaction = death.attackerFaction ?  death.attackerFaction.abbreviation : 'None';
         const victimFaction    = death.victimFaction ? death.victimFaction.abbreviation : 'None';
         const worldName        = death.world ? death.world.name : 'unknown';
         const zoneName         = death.zone  ? death.zone.name : 'unknown';
 
-        console.log({
+        deaths.push({
             type:     'character death',
             factions: `${attackingFaction} -> ${victimFaction}`,
             domain:   weapon.domain,
             category: weapon.category,
-            time:     death.timestamp,
+            time:     new Date(death.timestamp * 1000),
             location: `${worldName} - ${zoneName}`
         });
+        console.log(`Deaths: ${deaths.length}`);
+    }
+}
+
+function expireDeaths() {
+    if(deaths.length < 1) return;
+    // Look through the array starting with the oldest item
+    for(;;) {
+        const time = deaths[0].time;
+
+        // Keep 30 sec worth of data in the queue
+        if (time < (Date.now() - 30000)) {
+            // Remove the first item and checks the next
+            deaths.splice(0, 1);
+        } else {
+            // Stop looking for now. Will be called again later.
+            break;
+        }
     }
 }
 

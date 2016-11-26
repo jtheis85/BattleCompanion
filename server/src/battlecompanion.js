@@ -43,12 +43,12 @@ function dataReceived() {
         factions.push(factionData[key]);
     }
 
-    aggregator.initialize(worlds, zones, factions);
-    console.log(aggregator.get());
+    //aggregator.initialize(worlds, zones, factions);
+    //console.log(aggregator.get());
 
 
-    //wsApi.connect(() => {
-    //    vehicleDestroyData.trackVehicleDestruction();
-    //    deathData.trackDeaths();
-    //});
+    wsApi.connect(() => {
+        vehicleDestroyData.trackVehicleDestruction();
+        deathData.trackDeaths();
+    });
 }

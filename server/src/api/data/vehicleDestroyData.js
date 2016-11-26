@@ -10,6 +10,8 @@ import vehicleData from '../data/vehicleData.js';
 import weaponData  from '../data/weaponData.js';
 import zoneData    from '../data/zoneData.js';
 
+const vehicleDestroys = [];
+
 const vehicleDestroyData = {
     trackVehicleDestruction() {
         const subscription = {
@@ -44,7 +46,7 @@ function onDataReceived(data) {
         const worldName = death.world ? death.world.name : 'unknown';
         const zoneName  = death.zone  ? death.zone.name : 'unknown';
 
-        console.log({
+        vehicleDestroys.push({
             type:          'vehicle death',
             factions:      `${attackingFaction} -> ${victimFaction}`,
             domain:        weaponDomain,
@@ -53,6 +55,7 @@ function onDataReceived(data) {
             time:          death.timestamp,
             location:      `${worldName} - ${zoneName}`
         });
+        //console.log(`VehicleKills: ${vehicleDestroys.length}`)
     }
 }
 
