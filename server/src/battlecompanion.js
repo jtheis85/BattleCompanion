@@ -4,6 +4,7 @@
 import aggregator from './aggregator.js';
 
 import wsApi from './api/wsApi.js';
+import analyze from './analyze.js';
 
 import factionData        from './api/data/factionData.js';
 import deathData          from './api/data/deathData.js';
@@ -51,4 +52,6 @@ function dataReceived() {
         vehicleDestroyData.trackVehicleDestruction();
         deathData.trackDeaths();
     });
+
+    setInterval(analyze.deaths, 3000);
 }

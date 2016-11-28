@@ -3,7 +3,6 @@
 import wsApi              from '../wsApi.js';
 import { subscribe }      from '../WsApiSubscription.js';
 import Death              from '../datatypes/Death.js';
-import { weaponCategory } from '../datatypes/Weapon.js';
 
 import loadoutData from '../data/loadoutData.js';
 import factionData from '../data/factionData.js';
@@ -24,12 +23,24 @@ const deathData = {
             eventNames: ['Death']
         };
         wsApi.subscribe(deathSub, onDataReceived);
-        setInterval(expireDeaths, 5000);
+        expireDeathsOverTime({
+            checkIntervalSeconds: 5,
+            expirationMinutes: 1
+        });
+    },
+    getDeaths() {
+        return deaths;
     }
 };
 
 function onDataReceived(data) {
     const death = toDeath(data);
+
+    // There's a distinction between a "death" from the API's perspective
+    // and the app's perspective. It might make sense to distinguish them.
+    // Or maybe the API object should only be the 'data' and 'toDeath'
+    // should handle the transform to the app's version
+
     const weapon = death.attackerWeapon;
     if(weapon && weapon.category) {
 
@@ -46,25 +57,30 @@ function onDataReceived(data) {
             time:     new Date(death.timestamp * 1000),
             location: `${worldName} - ${zoneName}`
         });
-        console.log(`Deaths: ${deaths.length}`);
     }
 }
 
-function expireDeaths() {
-    if(deaths.length < 1) return;
-    // Look through the array starting with the oldest item
-    for(;;) {
-        const time = deaths[0].time;
+function expireDeathsOverTime({
+        checkIntervalSeconds,
+        expirationMinutes
+    }) {
 
-        // Keep 30 sec worth of data in the queue
-        if (time < (Date.now() - 30000)) {
-            // Remove the first item and checks the next
-            deaths.splice(0, 1);
-        } else {
-            // Stop looking for now. Will be called again later.
-            break;
+    setInterval(() => {
+        // Look through the array starting with the oldest item
+        for(;;) {
+            if(deaths.length < 1) break;
+            const time = deaths[0].time;
+
+            if (time < (Date.now() - expirationMinutes * 30000)) { // to milliseconds
+                // Remove the first item and checks the next
+                deaths.splice(0, 1);
+            } else {
+                // Stop looking for now. Will be called again later.
+                break;
+            }
         }
-    }
+    }, checkIntervalSeconds * 1000); // to milliseconds
+
 }
 
 function toDeath(data) {
