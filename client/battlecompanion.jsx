@@ -53,3 +53,12 @@ var App = () => (
 );
 
 ReactDOM.render(<App/>, document.getElementById('root'));
+
+let ws = new WebSocket('ws://localhost:8080');
+ws.onopen = () => {
+    ws.send('test');
+};
+
+ws.onmessage = function (e) {
+    console.log(e.data);
+};

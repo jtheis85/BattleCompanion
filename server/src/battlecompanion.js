@@ -48,10 +48,13 @@ function dataReceived() {
     //console.log(aggregator.get());
 
 
+    console.log('Connecting to API');
     wsApi.connect(() => {
         vehicleDestroyData.trackVehicleDestruction();
         deathData.trackDeaths();
     });
 
-    setInterval(analyze.deaths, 3000);
+    console.log('Initializing...')
+    // should this be inside the connect callback?
+    analyze.initialize();
 }
