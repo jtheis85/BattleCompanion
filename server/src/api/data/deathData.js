@@ -1,11 +1,10 @@
 'use strict';
 
-import wsApi              from '../wsApi.js';
-import { subscribe }      from '../WsApiSubscription.js';
-import Death              from '../datatypes/Death.js';
+import wsApi         from '../wsApi.js';
+import { subscribe } from '../WsApiSubscription.js';
+import Death         from '../datatypes/Death.js';
 
 import loadoutData from '../data/loadoutData.js';
-import factionData from '../data/factionData.js';
 import worldData   from '../data/worldData.js';
 import vehicleData from '../data/vehicleData.js';
 import weaponData  from '../data/weaponData.js';
@@ -34,30 +33,10 @@ const deathData = {
 };
 
 function onDataReceived(data) {
+    // Transform the API data regarding the death to a Death object from the app's perspective
     const death = toDeath(data);
-
-    // There's a distinction between a "death" from the API's perspective
-    // and the app's perspective. It might make sense to distinguish them.
-    // Or maybe the API object should only be the 'data' and 'toDeath'
-    // should handle the transform to the app's version
-
-    const weapon = death.attackerWeapon;
-    if(weapon && weapon.category) {
-
-        const attackingFaction = death.attackerFaction ?  death.attackerFaction.abbreviation : 'None';
-        const victimFaction    = death.victimFaction ? death.victimFaction.abbreviation : 'None';
-        const worldName        = death.world ? death.world.name : 'unknown';
-        const zoneName         = death.zone  ? death.zone.name : 'unknown';
-
-        deaths.push({
-            type:     'character death',
-            factions: `${attackingFaction} -> ${victimFaction}`,
-            domain:   weapon.domain,
-            category: weapon.category,
-            time:     new Date(death.timestamp * 1000),
-            location: `${worldName} - ${zoneName}`
-        });
-    }
+    // Track the death for future analysis
+    deaths.push(death);
 }
 
 function expireDeathsOverTime({

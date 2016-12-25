@@ -1,8 +1,8 @@
 'use strict';
 
-import wsApi          from '../wsApi.js';
-import { subscribe }  from '../WsApiSubscription.js';
-import Death          from '../datatypes/Death.js';
+import wsApi         from '../wsApi.js';
+import { subscribe } from '../WsApiSubscription.js';
+import Death         from '../datatypes/Death.js';
 
 import loadoutData from '../data/loadoutData.js';
 import worldData   from '../data/worldData.js';
@@ -21,42 +21,15 @@ const vehicleDestroyData = {
             eventNames: ['VehicleDestroy']
         };
         wsApi.subscribe(subscription, onDataReceived);
+    },
+    getVehicleDestruction() {
+        return vehicleDestroys;
     }
 };
 
 function onDataReceived(data) {
     const death = toDeath(data);
-    if(death) {
-        const weapon = death.attackerWeapon;
-        const weaponDomain = weapon ? weapon.domain : 'Unknown';
-        const weaponCategory = weapon ? weapon.category : 'Unknown';
-
-        const attackingFaction = death.attackerFaction ? death.attackerFaction.abbreviation : 'None';
-        const victimFaction    = death.victimFaction   ? death.victimFaction.abbreviation : 'None';
-
-        const attacker = death.attackerVehicle
-            ? death.attackerVehicle.domain
-            : death.attackerWeapon
-                ? death.attackerWeapon.category
-                : 'Unknown';
-        const victim = death.victimVehicle
-            ? death.victimVehicle.domain
-            : 'None';
-
-        const worldName = death.world ? death.world.name : 'unknown';
-        const zoneName  = death.zone  ? death.zone.name : 'unknown';
-
-        vehicleDestroys.push({
-            type:          'vehicle death',
-            factions:      `${attackingFaction} -> ${victimFaction}`,
-            domain:        weaponDomain,
-            category:      weaponCategory,
-            victimVehicle: victim,
-            time:          death.timestamp,
-            location:      `${worldName} - ${zoneName}`
-        });
-        //console.log(`VehicleKills: ${vehicleDestroys.length}`)
-    }
+    vehicleDestroys.push(death);
 }
 
 function toDeath(data) {

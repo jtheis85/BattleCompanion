@@ -54,7 +54,7 @@ function dataReceived() {
         deathData.trackDeaths();
     });
 
-    console.log('Initializing...')
+    console.log('Initializing...');
     // should this be inside the connect callback?
     analyze.initialize();
 }

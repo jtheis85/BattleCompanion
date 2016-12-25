@@ -2,7 +2,7 @@
 
 import restApi from '../restApi.js';
 import { RestApiQuery } from '../restApi.js';
-import Weapon from '../datatypes/Weapon.js';
+import { Weapon } from '../datatypes/Weapon.js';
 import { weaponDomain, weaponCategory } from '../datatypes/Weapon.js';
 
 const weaponDictionary = Object.create(null);

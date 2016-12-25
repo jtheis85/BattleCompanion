@@ -54,4 +54,4 @@ class Weapon {
     }
 }
 
-export { Weapon as default, weaponCategory, weaponDomain }
+export { Weapon, weaponCategory, weaponDomain }
