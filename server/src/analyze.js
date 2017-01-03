@@ -19,20 +19,26 @@ const analyze = {
     initialize() {
         wss = new WebSocketServer({port:8080});
         wss.on('connection', (connection) => {
-            console.log('Connected');
-            setInterval(() => analyze.deaths(connection), 3000);
+            connection.on('message', message => {
+                console.log('Connected');
+                setInterval(() => analyze.deaths(connection, message), 3000);
+            });
         });
         console.log('Initialized');
         setInterval(() => analyze.analyzeAntiAir(), 3000);
     },
-    deaths(connection) {
+    deaths(connection, message) {
         const deaths = deathData.getDeaths();
         const nonInfantryKills = deaths.reduce((sum, death) => {
             if(death.getDomain() !== weaponDomain.infantry) {
                 return sum + 1;
             } else return sum;
         }, 0);
-        connection.send(`Non-infantry kills: ${nonInfantryKills}`);
+        const content = JSON.parse(message);
+        const server = content.route ? content.route.server : null;
+        const faction = content.route ? content.route.faction : null;
+        const response = `Server: ${server} Faction ${faction}`;
+        connection.send(`${response}: ${nonInfantryKills}`);
         console.log('Message Sent');
     },
     analyzeAntiAir() {

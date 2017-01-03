@@ -33,7 +33,7 @@ function initializeConnection(readyCallback) {
             if(!data.payload) return;
             const eventName = data.payload.event_name;
             if(subs.hasOwnProperty(eventName)) {
-                // Call the apropriate subscription callback
+                // Call the appropriate subscription callback
                 subs[eventName](data.payload);
             }
         };
