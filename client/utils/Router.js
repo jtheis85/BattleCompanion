@@ -22,10 +22,26 @@ function processHash(rawHash) {
 
 function parseHash(rawHash) {
     if(rawHash) {
-        var splitHash = rawHash.substring(1).split('/');
+        const pieces = rawHash.substring(1).split('/');
+        let server, faction, option;
+        for(let i = 0; i < pieces.length; i+=2) {
+            switch(pieces[i]) {
+                case 's':
+                    server = pieces[i+1];
+                    break;
+                case 'f':
+                    faction = pieces[i+1];
+                    break;
+                case 'o':
+                    option = pieces[i+1];
+                    break;
+            }
+        }
+
         return {
-            server:  splitHash[0],
-            faction: splitHash[1]
+            server:  server,
+            faction: faction,
+            option:  option
         }
     } else {
         return null;

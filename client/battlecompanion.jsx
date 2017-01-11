@@ -16,30 +16,52 @@ class App extends React.Component {
         const servers = ['Emerald', 'Connery', 'Cobalt', 'Miller', 'Briggs'];
         const factions = ['TR', 'NC', 'VS'];
 
-        const routeFaction = route ? route.faction : '';
-        const routeServer = route ? route.server : '';
+        const routeFaction = route ? route.faction : undefined;
+        const routeServer = route ? route.server : undefined;
 
         return (
             <div>
             <nav>
                 <div className="bc-servers">
                     {
-                        servers.map(server => (
-                            <a href={`#${server}/${routeFaction}`}>{server}</a>
-                        ))
+                        servers.map(server => {
+                            const url = this._buildUrl(server, routeFaction, null);
+                            return <a href={url}>{server}</a>;
+                        })
                     }
                 </div>
                 <div className="bc-factions">
                     {
-                        factions.map(faction => (
-                            <a href={`#${routeServer}/${faction}`}>{faction}</a>
-                        ))
+                        factions.map(faction => {
+                            const url = this._buildUrl(routeServer, faction, null);
+                            return <a href={url}>{faction}</a>;
+                        })
                     }
+                </div>
+                <div className="bc-debug">
+                    <a href={this._buildUrl(null, null, 'Debug')}>Debug</a>
                 </div>
             </nav>
                 <h1>{message}</h1>
             </div>
         );
+    }
+    _buildUrl(server, faction, option) {
+        let pieces = [];
+        if(server) {
+            pieces.push('s');
+            pieces.push(server);
+        }
+        if(faction) {
+            pieces.push('f');
+            pieces.push(faction);
+        }
+        if(option) {
+            pieces.push('o');
+            pieces.push(option);
+        }
+
+        return `#${pieces.join('/')}`;
     }
 }
 

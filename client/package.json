@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "browserify battlecompanion.jsx -o battlecompanion-bundle.js",
-    "watch": "watchify battlecompanion.jsx -o battlecompanion-bundle.js --debug"
+    "watch": "watchify battlecompanion.jsx -o battlecompanion-bundle.js --debug -v"
   },
   "browserify": {
     "transform": [
