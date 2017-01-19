@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom';
 
 import Router from './utils/Router.js';
 
+import StatusCard from './components/StatusCard.jsx';
+
 let currentRoute;
 
 class App extends React.Component {
@@ -21,28 +23,31 @@ class App extends React.Component {
 
         return (
             <div>
-            <nav>
-                <div className="bc-servers">
-                    {
-                        servers.map(server => {
-                            const url = this._buildUrl(server, routeFaction, null);
-                            return <a href={url}>{server}</a>;
-                        })
-                    }
-                </div>
-                <div className="bc-factions">
-                    {
-                        factions.map(faction => {
-                            const url = this._buildUrl(routeServer, faction, null);
-                            return <a href={url}>{faction}</a>;
-                        })
-                    }
-                </div>
-                <div className="bc-debug">
-                    <a href={this._buildUrl(null, null, 'Debug')}>Debug</a>
-                </div>
-            </nav>
+                    <nav>
+                    <div className="bc-servers">
+                        {
+                            servers.map(server => {
+                                const url = this._buildUrl(server, routeFaction, null);
+                                return <a href={url}>{server}</a>;
+                            })
+                        }
+                    </div>
+                    <div className="bc-factions">
+                        {
+                            factions.map(faction => {
+                                const url = this._buildUrl(routeServer, faction, null);
+                                return <a href={url}>{faction}</a>;
+                            })
+                        }
+                    </div>
+                    <div className="bc-debug">
+                        <a href={this._buildUrl(null, null, 'Debug')}>Debug</a>
+                    </div>
+                </nav>
                 <h1>{message}</h1>
+                <StatusCard icon="alert" title="High AA Activity!">
+                    <p>High anti-air activity has been detected on your continent!</p>
+                </StatusCard>
             </div>
         );
     }

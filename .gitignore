@@ -5,3 +5,13 @@ _dependencies
 server/lib
 
 npm-debug.log
+
+client/Base.css
+
+client/components/Icon.css
+
+client/components/StatusCard.css
+
+client/main.css
+
+client/Reset.css
