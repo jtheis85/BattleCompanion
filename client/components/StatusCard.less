@@ -3,8 +3,8 @@
   background-color: hsl(0, 0%, 20%);
   color: hsl(0, 0%, 90%);
 
-  border-left: 10px solid hsl(25, 100%, 50%);
-  border-bottom: 2px dashed hsl(25, 100%, 50%);
+  border-left: 10px solid ;
+  border-bottom: 2px dashed ;
   padding-left: 20px;
   margin: 20px;
 
@@ -20,6 +20,13 @@
   .bc-icon {
     margin-right: 0.5em;
     font-size: 0.75em;
+  }
+
+  &._high {
+    border-color: hsl(25, 100%, 50%);
+  }
+  &._low {
+    border-color: hsl(180, 75%, 50%)
   }
 }
 

@@ -8,14 +8,48 @@ class StatusCard extends React.Component {
         super(props);
     }
     render() {
-        const {icon, title, children} = this.props;
+        const {status, title, children} = this.props;
+        const statusClass = getCssClass(status);
         return (
-            <div className="bc-status-card _warning">
-                <h1><Icon className="_warning" icon={icon}/>{title}</h1>
+            <div className={`bc-status-card ${statusClass}`}>
+                <h1>
+                    <Icon
+                        className={statusClass}
+                        icon={getGlyph(status)}
+                    />
+                    {title}
+                </h1>
                 {children}
             </div>
         );
     }
 }
 
-export default StatusCard;
+function getCssClass(statusProp) {
+    switch (statusProp) {
+        case status.high:
+            return '_high';
+        case status.low:
+            return '_low';
+        default:
+            throw new Error(`Unrecognized status: ${statusProp}`);
+    }
+}
+
+function getGlyph(statusProp) {
+    switch (statusProp) {
+        case status.high:
+            return 'alert';
+        case status.low:
+            return 'cloud';
+        default:
+            throw new Error(`Unrecognized status: ${statusProp}`);
+    }
+}
+
+const status = {
+    high: 'STATUS_HIGH',
+    low: 'STATUS_LOW'
+};
+
+export { StatusCard as default, status };

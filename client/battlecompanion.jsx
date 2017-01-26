@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import Router from './utils/Router.js';
 
 import StatusCard from './components/StatusCard.jsx';
+import {status} from './components/StatusCard.jsx';
 
 let currentRoute;
 
@@ -45,8 +46,11 @@ class App extends React.Component {
                     </div>
                 </nav>
                 <h1>{message}</h1>
-                <StatusCard icon="alert" title="High AA Activity!">
+                <StatusCard status={status.high} title="High AA Activity!">
                     <p>High anti-air activity has been detected on your continent!</p>
+                </StatusCard>
+                <StatusCard status={status.low} title="Low AA Activity">
+                    <p>The skies on your continent are clear. Carry on, pilot!</p>
                 </StatusCard>
             </div>
         );
