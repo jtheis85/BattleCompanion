@@ -8,10 +8,10 @@ class StatusCard extends React.Component {
         super(props);
     }
     render() {
-        const {status, title, children} = this.props;
+        const {status, title, className, children} = this.props;
         const statusClass = getCssClass(status);
         return (
-            <div className={`bc-status-card ${statusClass}`}>
+            <div className={`bc-status-card ${statusClass} ${className}`}>
                 <h1>
                     <Icon
                         className={statusClass}

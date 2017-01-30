@@ -15,20 +15,15 @@ class App extends React.Component {
         super(props);
     }
     render() {
-        const {route, message} = this.props;
+        const {route, current, previous} = this.props;
         const servers = ['Emerald', 'Connery', 'Cobalt', 'Miller', 'Briggs'];
         const factions = ['TR', 'NC', 'VS'];
 
         const routeFaction = route ? route.faction : undefined;
         const routeServer = route ? route.server : undefined;
 
-        const statusCard = message === 'high' ?
-            <StatusCard status={status.high} title="High AA Activity!">
-                <p>High anti-air activity has been detected on your continent!</p>
-            </StatusCard> :
-            <StatusCard status={status.low} title="Low AA Activity">
-                <p>The skies on your continent are clear. Carry on, pilot!</p>
-            </StatusCard>;
+        const currentCard = !current ? null : toCard(current, { animate: 'in'});
+        const previousCard = !previous ? null : toCard(previous, { animate: 'out'});
 
         return (
             <div>
@@ -53,7 +48,8 @@ class App extends React.Component {
                         <a href={this._buildUrl(null, null, 'Debug')}>Debug</a>
                     </div>
                 </nav>
-                {statusCard}
+                {currentCard}
+                {current !== previous ? previousCard : null}
             </div>
         );
     }
@@ -76,6 +72,21 @@ class App extends React.Component {
     }
 }
 
+function toCard(message, options) {
+    if(message === 'high') {
+        return <StatusCard className={options.animate} status={status.high} title="High AA Activity!">
+            <p>High anti-air activity has been detected on your continent!</p>
+        </StatusCard>;
+    } else {
+        return <StatusCard className={options.animate} status={status.low} title="Low AA Activity">
+            <p>The skies on your continent are clear. Carry on, pilot!</p>
+        </StatusCard>;
+    }
+}
+
+let current = {};
+let previous = {};
+
 Router.initialize(route => {
     currentRoute = route;
     ReactDOM.render(<App route={route} message=""/>, document.getElementById('root'));
@@ -85,7 +96,9 @@ Router.initialize(route => {
     };
 
     ws.onmessage = function (e) {
-        ReactDOM.render(<App route={route} message={e.data}/>, document.getElementById('root'));
+        previous = current;
+        current = e.data;
+        ReactDOM.render(<App route={route} current={current} previous={previous}/>, document.getElementById('root'));
     };
 });
 
