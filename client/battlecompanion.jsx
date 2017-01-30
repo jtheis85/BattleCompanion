@@ -22,6 +22,14 @@ class App extends React.Component {
         const routeFaction = route ? route.faction : undefined;
         const routeServer = route ? route.server : undefined;
 
+        const statusCard = message === 'high' ?
+            <StatusCard status={status.high} title="High AA Activity!">
+                <p>High anti-air activity has been detected on your continent!</p>
+            </StatusCard> :
+            <StatusCard status={status.low} title="Low AA Activity">
+                <p>The skies on your continent are clear. Carry on, pilot!</p>
+            </StatusCard>;
+
         return (
             <div>
                     <nav>
@@ -45,13 +53,7 @@ class App extends React.Component {
                         <a href={this._buildUrl(null, null, 'Debug')}>Debug</a>
                     </div>
                 </nav>
-                <h1>{message}</h1>
-                <StatusCard status={status.high} title="High AA Activity!">
-                    <p>High anti-air activity has been detected on your continent!</p>
-                </StatusCard>
-                <StatusCard status={status.low} title="Low AA Activity">
-                    <p>The skies on your continent are clear. Carry on, pilot!</p>
-                </StatusCard>
+                {statusCard}
             </div>
         );
     }

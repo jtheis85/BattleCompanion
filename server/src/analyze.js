@@ -17,15 +17,19 @@ let wss;
 
 const analyze = {
     initialize() {
-        wss = new WebSocketServer({port:8080});
-        wss.on('connection', (connection) => {
-            connection.on('message', message => {
-                console.log('Connected');
-                setInterval(() => analyze.deaths(connection, message), 3000);
-            });
-        });
-        console.log('Initialized');
-        setInterval(() => analyze.analyzeAntiAir(), 3000);
+        console.log('Initializing...');
+        randomizeMessage();
+        console.log('Initialized.');
+
+        //wss = new WebSocketServer({port:8080});
+        //wss.on('connection', (connection) => {
+        //    connection.on('message', message => {
+        //        console.log('Connected');
+        //        setInterval(() => analyze.deaths(connection, message), 3000);
+        //    });
+        //});
+        //console.log('Initialized');
+        //setInterval(() => analyze.analyzeAntiAir(), 3000);
     },
     deaths(connection, message) {
         const deaths = deathData.getDeaths();
@@ -61,5 +65,22 @@ const analyze = {
         console.log(`AA Deaths: ${antiAirDeaths} / Total ${deaths.length}`);
     }
 };
+
+function randomizeMessage() {
+    const wss = new WebSocketServer({ port: 8080});
+    wss.on('connection', connection => {
+        connection.on('message', message => {
+            console.log('Connected');
+            setInterval(() => sendRandomMessage(connection), 3000);
+        });
+    });
+}
+
+function sendRandomMessage(connection) {
+    var val = Math.floor(Math.random() * 2) > 0
+        ? 'high' : 'low';
+    connection.send(val);
+    console.log(`Sent '${val}'`);
+}
 
 export default analyze;
