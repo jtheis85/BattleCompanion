@@ -72,8 +72,9 @@ class App extends React.Component {
     }
 }
 
+
 function toCard(message, options) {
-    if(message === 'high') {
+    if(message.level === 'high') {
         return <StatusCard className={options.animate} status={status.high} title="High AA Activity!">
             <p>High anti-air activity has been detected on your continent!</p>
         </StatusCard>;
@@ -97,7 +98,7 @@ Router.initialize(route => {
 
     ws.onmessage = function (e) {
         previous = current;
-        current = e.data;
+        current = JSON.parse(e.data);
         ReactDOM.render(<App route={route} current={current} previous={previous}/>, document.getElementById('root'));
     };
 });

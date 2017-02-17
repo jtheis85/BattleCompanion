@@ -12,6 +12,6 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "app": "node lib/battlecompanion.js"
+    "start": "node lib/battlecompanion.js"
   }
 }
