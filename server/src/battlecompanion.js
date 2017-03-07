@@ -1,6 +1,5 @@
 'use strict';
 
-
 import aggregator from './aggregator.js';
 
 import wsApi from './api/wsApi.js';
@@ -14,6 +13,11 @@ import vehicleData        from './api/data/vehicleData.js';
 import weaponData         from './api/data/weaponData.js';
 import worldData          from './api/data/worldData.js';
 import zoneData           from './api/data/zoneData.js';
+
+import utilities from './utilities.js';
+
+// Must come before it gets used!
+utilities.augmentArray();
 
 weaponData.startFetchWeapons(weapons => dataReceived());
 worldData.startFetchWorlds(worlds => dataReceived());

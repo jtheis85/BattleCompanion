@@ -37,7 +37,14 @@ function initializeConnection(readyCallback) {
                 subs[eventName](data.payload);
             }
         };
+
+
     };
+    // TODO: Not sure this does what I think it does.
+    // It's kind of squirrely to test since the DBG API must be down
+    ws.onerror = (e) => {
+        console.log(`ERROR: ${e}`);
+    }
 }
 
 function subscribe(subscription, eventReceivedCallback) {
